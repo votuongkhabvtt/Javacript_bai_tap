@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng xem giờ thế giới</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .clock-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .clock-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .clock-card:hover {
+            transform: translateY(-5px);
+        }
+        .city {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .country {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        .time {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .date {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+        .flag {
+            width: 40px;
+            height: 25px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Giờ hiện tại các thành phố trên thế giới</h1>
+        
+        <div class="clock-container" id="clocks">
+            <!-- Các đồng hồ sẽ được thêm bằng JavaScript -->
+        </div>
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cities = [
+                { city: "New York", country: "Mỹ", timezone: "America/New_York", flag: "🇺🇸" },
+                { city: "Washington D.C.", country: "Mỹ", timezone: "America/New_York", flag: "🇺🇸" },
+                { city: "Paris", country: "Pháp", timezone: "Europe/Paris", flag: "🇫🇷" },
+                { city: "Marseille", country: "Pháp", timezone: "Europe/Paris", flag: "🇫🇷" },
+                { city: "Moscow", country: "Nga", timezone: "Europe/Moscow", flag: "🇷🇺" },
+                { city: "Saint Petersburg", country: "Nga", timezone: "Europe/Moscow", flag: "🇷🇺" },
+                { city: "Bắc Kinh", country: "Trung Quốc", timezone: "Asia/Shanghai", flag: "🇨🇳" },
+                { city: "Thượng Hải", country: "Trung Quốc", timezone: "Asia/Shanghai", flag: "🇨🇳" },
+                { city: "Tokyo", country: "Nhật Bản", timezone: "Asia/Tokyo", flag: "🇯🇵" },
+                { city: "Osaka", country: "Nhật Bản", timezone: "Asia/Tokyo", flag: "🇯🇵" },
+                { city: "New Delhi", country: "Ấn Độ", timezone: "Asia/Kolkata", flag: "🇮🇳" },
+                { city: "Mumbai", country: "Ấn Độ", timezone: "Asia/Kolkata", flag: "🇮🇳" },
+                { city: "Ulaanbaatar", country: "Mông Cổ", timezone: "Asia/Ulaanbaatar", flag: "🇲🇳" },
+                { city: "Hà Nội", country: "Việt Nam", timezone: "Asia/Ho_Chi_Minh", flag: "🇻🇳" },
+                { city: "Hồ Chí Minh", country: "Việt Nam", timezone: "Asia/Ho_Chi_Minh", flag: "🇻🇳" }
+            ];
+
+            const clocksContainer = document.getElementById('clocks');
+
+            function updateClocks() {
+                clocksContainer.innerHTML = '';
+                
+                cities.forEach(city => {
+                    const now = new Date();
+                    const options = { 
+                        timeZone: city.timezone,
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        second: '2-digit',
+                        hour12: false
+                    };
+                    const timeStr = now.toLocaleTimeString('vi-VN', options);
+                    
+                    const dateOptions = {
+                        timeZone: city.timezone,
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    };
+                    const dateStr = now.toLocaleDateString('vi-VN', dateOptions);
+                    
+                    const clockCard = document.createElement('div');
+                    clockCard.className = 'clock-card';
+                    clockCard.innerHTML = `
+                        <div class="city">${city.city} ${city.flag}</div>
+                        <div class="country">${city.country}</div>
+                        <div class="time">${timeStr}</div>
+                        <div class="date">${dateStr}</div>
+                    `;
+                    
+                    clocksContainer.appendChild(clockCard);
+                });
+            }
+
+            // Cập nhật đồng hồ mỗi giây
+            updateClocks();
+            setInterval(updateClocks, 1000);
+        });
+    </script>
+</body>
+</html>
