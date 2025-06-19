@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Từ điển Anh - Việt</title>
+    <title>Tra cứu từ điển Anh - Việt</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,80 +11,118 @@
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
+            background-color: #f5f5f5;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .search-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #result {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-height: 100px;
+        }
+        .word {
+            font-size: 24px;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        .meaning {
+            font-size: 18px;
+            color: #2c3e50;
+        }
+        .not-found {
+            color: #e74c3c;
+            font-style: italic;
         }
         .dictionary {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 30px;
-        }
-        .header {
-            font-weight: bold;
-            background-color: #3498db;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-        .entry {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        .english {
-            font-weight: bold;
+            display: none; /* Ẩn dữ liệu từ điển gốc */
         }
     </style>
 </head>
 <body>
-    <h1>Từ điển Anh - Việt</h1>
+    <h1>Tra cứu từ điển Anh - Việt</h1>
     
-    <div class="dictionary">
-        <div class="header">Tiếng Anh</div>
-        <div class="header">Tiếng Việt</div>
-        
-        <div class="entry english">I</div>
-        <div class="entry">Tôi</div>
-        
-        <div class="entry english">You</div>
-        <div class="entry">Anh</div>
-        
-        <div class="entry english">He</div>
-        <div class="entry">Anh ấy</div>
-        
-        <div class="entry english">It</div>
-        <div class="entry">Nó</div>
-        
-        <div class="entry english">She</div>
-        <div class="entry">Chị</div>
-        
-        <div class="entry english">We</div>
-        <div class="entry">Chúng tôi</div>
-        
-        <div class="entry english">They</div>
-        <div class="entry">Chúng nó</div>
-        
-        <div class="entry english">Sleep</div>
-        <div class="entry">Ngủ</div>
-        
-        <div class="entry english">Wake up</div>
-        <div class="entry">Thức giấc</div>
-        
-        <div class="entry english">Sit</div>
-        <div class="entry">Ngồi</div>
-        
-        <div class="entry english">Stand</div>
-        <div class="entry">Đứng</div>
-        
-        <div class="entry english">Go</div>
-        <div class="entry">Đi</div>
-        
-        <div class="entry english">Run</div>
-        <div class="entry">Chạy</div>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Nhập từ tiếng Anh cần tra...">
     </div>
+    
+    <div id="result">
+        <p>Nhập từ tiếng Anh vào ô trên để tra nghĩa tiếng Việt</p>
+    </div>
+    
+    <!-- Dữ liệu từ điển ẩn -->
+    <div class="dictionary">
+        <div data-english="I" data-vietnamese="Tôi"></div>
+        <div data-english="You" data-vietnamese="Anh"></div>
+        <div data-english="He" data-vietnamese="Anh ấy"></div>
+        <div data-english="It" data-vietnamese="Nó"></div>
+        <div data-english="She" data-vietnamese="Chị"></div>
+        <div data-english="We" data-vietnamese="Chúng tôi"></div>
+        <div data-english="They" data-vietnamese="Chúng nó"></div>
+        <div data-english="Sleep" data-vietnamese="Ngủ"></div>
+        <div data-english="Wake up" data-vietnamese="Thức giấc"></div>
+        <div data-english="Sit" data-vietnamese="Ngồi"></div>
+        <div data-english="Stand" data-vietnamese="Đứng"></div>
+        <div data-english="Go" data-vietnamese="Đi"></div>
+        <div data-english="Run" data-vietnamese="Chạy"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const resultDiv = document.getElementById('result');
+            const dictionaryEntries = document.querySelectorAll('.dictionary div');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.trim();
+                
+                if (searchTerm === '') {
+                    resultDiv.innerHTML = '<p>Nhập từ tiếng Anh vào ô trên để tra nghĩa tiếng Việt</p>';
+                    return;
+                }
+                
+                let found = false;
+                
+                dictionaryEntries.forEach(entry => {
+                    const englishWord = entry.getAttribute('data-english').toLowerCase();
+                    const vietnameseMeaning = entry.getAttribute('data-vietnamese');
+                    
+                    if (englishWord === searchTerm.toLowerCase()) {
+                        resultDiv.innerHTML = `
+                            <div class="word">${entry.getAttribute('data-english')}</div>
+                            <div class="meaning">Nghĩa tiếng Việt: <strong>${vietnameseMeaning}</strong></div>
+                        `;
+                        found = true;
+                    }
+                });
+                
+                if (!found) {
+                    resultDiv.innerHTML = `<p class="not-found">Không tìm thấy từ "${searchTerm}" trong từ điển</p>`;
+                }
+            });
+            
+            // Focus vào ô tìm kiếm khi trang load
+            searchInput.focus();
+        });
+    </script>
 </body>
 </html>
