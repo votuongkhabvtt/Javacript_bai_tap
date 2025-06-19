@@ -1,1 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luận Giải Lá Số Tử Vi</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #8e44ad;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .upload-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        #file-input {
+            display: none;
+        }
+        .upload-btn {
+            background-color: #8e44ad;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .upload-btn:hover {
+            background-color: #732d91;
+        }
+        .file-name {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .analysis-section {
+            display: none;
+            margin-top: 30px;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        #pdf-canvas {
+            border: 1px solid #ddd;
+            max-width: 100%;
+        }
+        .palace-analysis {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f0e6f6;
+            border-radius: 5px;
+        }
+        .palace-title {
+            color: #8e44ad;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .palace-content {
+            text-align: justify;
+        }
+        .loading {
+            text-align: center;
+            display: none;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #8e44ad;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Luận Giải Lá Số Tử Vi</h1>
+        
+        <div class="upload-section">
+            <input type="file" id="file-input" accept=".pdf">
+            <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                Tải lên file PDF lá số tử vi
+            </button>
+            <div class="file-name" id="file-name">Chưa chọn file</div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Đang phân tích lá số...</p>
+        </div>
+        
+        <div class="analysis-section" id="analysis-section">
+            <h2>Biểu đồ tử vi</h2>
+            <div class="chart-container">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
+            
+            <h2>Luận giải các cung</h2>
+            <div id="palaces-analysis">
+                <!-- Nội dung luận giải sẽ được thêm bằng JavaScript -->
+            </div>
+        </div>
+    </div>
 
+    <script>
+        // Thiết lập PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+        
+        const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
+        const loading = document.getElementById('loading');
+        const analysisSection = document.getElementById('analysis-section');
+        const palacesAnalysis = document.getElementById('palaces-analysis');
+        
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileName.textContent = file.name;
+                loading.style.display = 'block';
+                analysisSection.style.display = 'none';
+                
+                // Đọc file PDF
+                const fileReader = new FileReader();
+                fileReader.onload = function() {
+                    const typedArray = new Uint8Array(this.result);
+                    
+                    // Phân tích PDF
+                    analyzePDF(typedArray);
+                };
+                fileReader.readAsArrayBuffer(file);
+            }
+        });
+        
+        async function analyzePDF(data) {
+            try {
+                // Load PDF
+                const pdf = await pdfjsLib.getDocument(data).promise;
+                
+                // Hiển thị trang đầu tiên
+                const page = await pdf.getPage(1);
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.getElementById('pdf-canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                }).promise;
+                
+                // Giả lập phân tích các cung tử vi (trong thực tế cần API phân tích thực sự)
+                setTimeout(() => {
+                    generateAnalysis();
+                    loading.style.display = 'none';
+                    analysisSection.style.display = 'block';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Lỗi khi phân tích PDF:', error);
+                loading.style.display = 'none';
+                alert('Có lỗi xảy ra khi đọc file PDF. Vui lòng thử lại với file khác.');
+            }
+        }
+        
+        function generateAnalysis() {
+            // Danh sách các cung trong tử vi
+            const palaces = [
+                { name: "Cung Mệnh", position: "chính giữa" },
+                { name: "Cung Phụ Mẫu", position: "trên bên trái" },
+                { name: "Cung Phúc Đức", position: "trên bên phải" },
+                { name: "Cung Điền Trạch", position: "góc trên bên phải" },
+                { name: "Cung Quan Lộc", position: "dưới bên trái" },
+                { name: "Cung Nô Bộc", position: "dưới bên phải" },
+                { name: "Cung Thiên Di", position: "góc dưới bên phải" },
+                { name: "Cung Tật Ách", position: "góc dưới bên trái" },
+                { name: "Cung Tài Bạch", position: "góc trên bên trái" },
+                { name: "Cung Tử Tức", position: "bên trái giữa" },
+                { name: "Cung Phu Thê", position: "bên phải giữa" },
+                { name: "Cung Huynh Đệ", position: "giữa phía trên" }
+            ];
+            
+            palacesAnalysis.innerHTML = '';
+            
+            // Tạo nội dung luận giải cho từng cung
+            palaces.forEach(palace => {
+                const analysis = generatePalaceAnalysis(palace.name);
+                
+                const palaceDiv = document.createElement('div');
+                palaceDiv.className = 'palace-analysis';
+                palaceDiv.innerHTML = `
+                    <div class="palace-title">${palace.name} (vị trí: ${palace.position})</div>
+                    <div class="palace-content">${analysis}</div>
+                `;
+                
+                palacesAnalysis.appendChild(palaceDiv);
+            });
+        }
+        
+        function generatePalaceAnalysis(palaceName) {
+            // Đây là nơi bạn có thể tích hợp API phân tích thực sự
+            // Hiện tại chúng tôi chỉ tạo nội dung mẫu
+            const analysisTexts = {
+                "Cung Mệnh": `Cung Mệnh đóng sao Tử Vi, chủ về quyền uy, địa vị. Người này có tố chất lãnh đạo, 
+                thích hợp làm việc trong môi trường có cấp bậc. Gặp nhiều sao tốt tụ hội nên cuộc đời gặp nhiều may mắn, 
+                có quý nhân phù trợ. Tuy nhiên cần chú ý đến sức khỏe về tim mạch.`,
+                "Cung Phụ Mẫu": `Cung Phụ Mẫu có Thiên Lương tọa thủ, chứng tỏ được cha mẹ yêu thương, gia đình hòa thuận. 
+                Mối quan hệ với cha mẹ tốt đẹp, nhận được nhiều sự hỗ trợ từ gia đình. Có thể cha hoặc mẹ là người có học thức 
+                hoặc làm nghề liên quan đến giáo dục, y tế.`,
+                "Cung Phúc Đức": `Cung Phúc Đức hiện diện sao Thiên Đồng, cho thấy phúc khí dồi dào, cuộc sống về già an nhàn. 
+                Người này có tâm tính hiền hòa, hay giúp đỡ người khác nên tích được nhiều phúc đức. Cần chú ý đến việc tu tâm 
+                dưỡng tính để duy trì phúc khí.`,
+                "Cung Điền Trạch": `Cung Điền Trạch có Vũ Khúc hội chiếu, báo hiệu tài sản bất động sản phát triển tốt. Có khả năng 
+                sở hữu nhiều nhà đất hoặc đầu tư bất động sản thành công. Nên mua nhà vào các năm Thìn, Tuất, Sửu, Mùi để được lợi. 
+                Nhà cửa rộng rãi, vị trí đẹp.`,
+                "Cung Quan Lộc": `Cung Quan Lộc đóng sao Thiên Phủ, chủ về sự nghiệp ổn định, có thể làm việc trong các cơ quan nhà nước 
+                hoặc doanh nghiệp lớn. Có khả năng thăng tiến tốt, đặc biệt ở độ tuổi trung niên. Năm 35-45 tuổi là giai đoạn sự nghiệp 
+                phát triển mạnh nhất.`,
+                "Cung Nô Bộc": `Cung Nô Bộc hiện diện sao Thất Sát, cho thấy mối quan hệ với cấp dưới có phần phức tạp. Cần chú ý trong 
+                việc quản lý nhân viên, tránh bị tiểu nhân hãm hại. Tuy nhiên nếu biết cách đối nhân xử thế thì vẫn có được người giúp 
+                việc trung thành.`,
+                "Cung Thiên Di": `Cung Thiên Di có Liêm Trinh chiếu, chủ về sự di chuyển, đi xa. Người này có nhiều cơ hội đi công tác, 
+                du lịch nước ngoài. Cuộc sống ở xứ người khá thuận lợi, có thể phát triển sự nghiệp ở nơi đất khách quê người. Tuy nhiên 
+                cần chú ý an toàn khi đi lại.`,
+                "Cung Tật Ách": `Cung Tật Ách xuất hiện sao Đà La, cần chú ý các bệnh về xương khớp, răng miệng và hệ tiêu hóa. Nên 
+                khám sức khỏe định kỳ, đặc biệt chú ý vào các năm Dần, Thân, Tỵ, Hợi. Duy trì chế độ ăn uống lành mạnh và tập thể dục 
+                thường xuyên để phòng bệnh.`,
+                "Cung Tài Bạch": `Cung Tài Bạch có Tham Lang tọa thủ, chủ về tài lộc dồi dào nhưng cũng dễ hao tán. Người này có khả năng 
+                kiếm tiền tốt, nhưng cần học cách quản lý tài chính. Đầu tư vào các lĩnh vực thương mại, dịch vụ sẽ mang lại lợi nhuận cao. 
+                Tránh cờ bạc và các hình thức đầu tư mạo hiểm.`,
+                "Cung Tử Tức": `Cung Tử Tức hiện diện sao Phá Quân, cho thấy con cái có tính độc lập cao, sớm tự lập. Có thể sinh ít con 
+                nhưng con cái thông minh, hiếu thảo. Quan hệ với con cái tốt, về già được con cái phụng dưỡng. Nên sinh con vào các năm 
+                Dần, Thân, Tỵ, Hợi để hợp mệnh.`,
+                "Cung Phu Thê": `Cung Phu Thê có Cự Môn chiếu, chủ về hôn nhân có nhiều thử thách. Nên kết hôn muộn sẽ bền vững hơn. Vợ/chồng 
+                là người có học thức, tính tình thẳng thắn. Cần học cách nhường nhịn và thấu hiểu lẫn nhau để hôn nhân hạnh phúc. Tránh 
+                cãi vã về vấn đề tài chính.`,
+                "Cung Huynh Đệ": `Cung Huynh Đệ xuất hiện sao Thiên Tướng, cho thấy mối quan hệ với anh chị em khá tốt đẹp. Được anh chị em 
+                giúp đỡ trong cuộc sống. Có thể làm ăn chung với anh chị em nhưng cần rõ ràng về mặt tài chính. Anh chị em trong nhà có 
+                người thành đạt, có địa vị trong xã hội.`
+            };
+            
+            return analysisTexts[palaceName] || `Cung ${palaceName} hiện chưa có thông tin phân tích chi tiết.`;
+        }
+    </script>
+</body>
+</html>
