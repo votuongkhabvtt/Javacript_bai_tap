@@ -1,1 +1,90 @@
-
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Từ điển Anh - Việt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .dictionary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        .header {
+            font-weight: bold;
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .entry {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .english {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Từ điển Anh - Việt</h1>
+    
+    <div class="dictionary">
+        <div class="header">Tiếng Anh</div>
+        <div class="header">Tiếng Việt</div>
+        
+        <div class="entry english">I</div>
+        <div class="entry">Tôi</div>
+        
+        <div class="entry english">You</div>
+        <div class="entry">Anh</div>
+        
+        <div class="entry english">He</div>
+        <div class="entry">Anh ấy</div>
+        
+        <div class="entry english">It</div>
+        <div class="entry">Nó</div>
+        
+        <div class="entry english">She</div>
+        <div class="entry">Chị</div>
+        
+        <div class="entry english">We</div>
+        <div class="entry">Chúng tôi</div>
+        
+        <div class="entry english">They</div>
+        <div class="entry">Chúng nó</div>
+        
+        <div class="entry english">Sleep</div>
+        <div class="entry">Ngủ</div>
+        
+        <div class="entry english">Wake up</div>
+        <div class="entry">Thức giấc</div>
+        
+        <div class="entry english">Sit</div>
+        <div class="entry">Ngồi</div>
+        
+        <div class="entry english">Stand</div>
+        <div class="entry">Đứng</div>
+        
+        <div class="entry english">Go</div>
+        <div class="entry">Đi</div>
+        
+        <div class="entry english">Run</div>
+        <div class="entry">Chạy</div>
+    </div>
+</body>
+</html>
