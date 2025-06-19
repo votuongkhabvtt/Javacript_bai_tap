@@ -1,1 +1,43 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tính tiền tiết kiệm</title>
+  <style>
+    body {font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;}
+    input, button {padding: 8px; margin: 5px 0; width:100%;}
+    button {background-color: #4CAF50; color: white; border: none; cursor: pointer;}
+    #ketQua { margin-top: 20px; padding: 10px; background-color: #f8f8f8;}
+  </style>
+</head>
+<body>
+  <h2>Tính tiền tiết kiệm ngân hàng</h2>
+  <label for="tienGui">Số tiền gửi (VND):</label>
+  <input type="number" id="tienGui" placeholder="Nhập số tiền">
+  <label for="thangGui">Số tháng gửi:</label>
+  <input type="number" id="thangGui" placeholder="Nhập số tháng">
+  <button onclick="tinhTien()">Tính toán</button>
+  <div id="ketQua"></div>
+  <script>
+    function tinhTien() {
+      const tienGui = parseFloat(document.getElementById("tienGui").value);
+      const thangGui = parseInt(document.getElementById("thangGui").value);
+      const laiSuatNam = 0.075;
+      if (isNaN(tienGui) || isNaN(thangGui) || tienGui <= 0 || thangGui <= 0) {
+        document.getElementById("ketQua").innerHTML = "<p style='color:red'>Vui lòng nhập số tiền và số tháng hợp lệ!</p>";
+        return;
+      }
+      const laiSuatThang = laiSuatNam/12;
+      const tienLai = tienGui * laiSuatThang * thangGui;
+      const tongTien = tienGui + tienLai;
+      document.getElementById("ketQua").innerHTML = `
+        <h3>Kết quả tiết kiệm:</h3>
+        <p>Số tiền gửi: <b>${tienGui.toLocaleString()} VND</b></p>
+        <p>Số tháng gửi: <b>${thangGui} tháng</b></p>
+        <p>Lãi suất: <b>7.5%/năm</b> (${(laiSuatThang*100).toFixed(4)}%/tháng)</p>
+        <p>Tiền lãi: <b>${tienLai.toLocaleString()} VND</b></p>
+        <p style='color:green; font-weight:bold'>Tổng tiền nhận được: ${tongTien.toLocaleString()} VND</p>
+      `;
+    }
+  </script>
+</body>
+</html>
