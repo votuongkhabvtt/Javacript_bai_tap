@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính chỉ số BMI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .bmi-info {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TÍNH CHỈ SỐ BMI</h1>
+        
+        <div class="form-group">
+            <label for="weight">Cân nặng (kg):</label>
+            <input type="number" id="weight" step="0.1" min="20" max="300" placeholder="Nhập cân nặng">
+        </div>
+        
+        <div class="form-group">
+            <label for="height">Chiều cao (m):</label>
+            <input type="number" id="height" step="0.01" min="1" max="2.5" placeholder="Nhập chiều cao">
+        </div>
+        
+        <button onclick="calculateBMI()">TÍNH BMI</button>
+        
+        <div id="result"></div>
+        
+        <div class="bmi-info">
+            <h3>Phân loại BMI:</h3>
+            <ul>
+                <li>Dưới 18.5: Thiếu cân</li>
+                <li>18.5 - 24.9: Bình thường</li>
+                <li>25 - 29.9: Thừa cân</li>
+                <li>30 trở lên: Béo phì</li>
+            </ul>
+        </div>
+    </div>
 
+    <script>
+        function calculateBMI() {
+            // Lấy giá trị từ người dùng
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            
+            // Kiểm tra dữ liệu hợp lệ
+            if (isNaN(weight) || isNaN(height) || height <= 0 || weight <= 0) {
+                alert("Vui lòng nhập giá trị hợp lệ!");
+                return;
+            }
+            
+            // Tính BMI
+            const bmi = weight / (height * height);
+            
+            // Hiển thị kết quả
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = "block";
+            
+            // Phân loại BMI
+            let category = "";
+            if (bmi < 18.5) {
+                category = "Thiếu cân";
+                resultDiv.style.backgroundColor = "#f39c12";
+            } else if (bmi < 25) {
+                category = "Bình thường";
+                resultDiv.style.backgroundColor = "#2ecc71";
+            } else if (bmi < 30) {
+                category = "Thừa cân";
+                resultDiv.style.backgroundColor = "#e67e22";
+            } else {
+                category = "Béo phì";
+                resultDiv.style.backgroundColor = "#e74c3c";
+            }
+            
+            resultDiv.innerHTML = `
+                <h2>Kết quả BMI của bạn:</h2>
+                <p><strong>Chỉ số BMI:</strong> ${bmi.toFixed(1)}</p>
+                <p><strong>Phân loại:</strong> ${category}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
