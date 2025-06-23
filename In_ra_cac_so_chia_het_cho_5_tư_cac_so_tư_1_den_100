@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Số chia hết cho 5 từ 1 đến 100</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .numbers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .number {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Các số chia hết cho 5 từ 1 đến 100</h1>
+    <div class="info">Sử dụng vòng lặp for kết hợp if để lọc các số chia hết cho 5</div>
+    <div id="numbers" class="numbers-container"></div>
 
+    <script>
+        const numbersContainer = document.getElementById('numbers');
+        let count = 0;
+        
+        // Vòng lặp for từ 1 đến 100
+        for (let i = 1; i <= 100; i++) {
+            // Sử dụng if để kiểm tra điều kiện chia hết cho 5
+            if (i % 5 === 0) {
+                // Tạo thẻ div cho mỗi số thỏa mãn điều kiện
+                const numberDiv = document.createElement('div');
+                numberDiv.className = 'number';
+                numberDiv.textContent = i;
+                numbersContainer.appendChild(numberDiv);
+                count++;
+            }
+        }
+        
+        // Hiển thị tổng số lượng
+        const infoDiv = document.querySelector('.info');
+        infoDiv.textContent += ` | Tìm thấy ${count} số chia hết cho 5`;
+    </script>
+</body>
+</html>
