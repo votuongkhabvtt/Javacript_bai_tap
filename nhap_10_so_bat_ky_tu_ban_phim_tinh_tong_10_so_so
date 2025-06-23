@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính tổng 10 số</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .input-container {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .number-list {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tính tổng 10 số</h1>
+    
+    <div id="input-fields"></div>
+    
+    <button onclick="calculateSum()">Tính tổng</button>
+    
+    <div id="result"></div>
 
+    <script>
+        // Tạo các ô nhập liệu
+        const inputFieldsDiv = document.getElementById('input-fields');
+        let inputHTML = '';
+        
+        let count = 1;
+        do {
+            inputHTML += `
+                <div class="input-container">
+                    <label for="num${count}">Số thứ ${count}:</label>
+                    <input type="number" id="num${count}" placeholder="Nhập số thứ ${count}">
+                </div>
+            `;
+            count++;
+        } while (count <= 10);
+        
+        inputFieldsDiv.innerHTML = inputHTML;
+
+        // Hàm tính tổng
+        function calculateSum() {
+            const resultDiv = document.getElementById('result');
+            let sum = 0;
+            let numbers = [];
+            let valid = true;
+            
+            let i = 1;
+            do {
+                const input = document.getElementById(`num${i}`);
+                const value = parseFloat(input.value);
+                
+                if (isNaN(value)) {
+                    valid = false;
+                    input.style.border = "1px solid red";
+                } else {
+                    input.style.border = "1px solid #ddd";
+                    sum += value;
+                    numbers.push(value);
+                }
+                
+                i++;
+            } while (i <= 10);
+            
+            if (!valid) {
+                resultDiv.innerHTML = '<p style="color: red;">Vui lòng nhập đầy đủ 10 số hợp lệ!</p>';
+                return;
+            }
+            
+            resultDiv.innerHTML = `
+                <p>Các số đã nhập: <span class="number-list">${numbers.join(', ')}</span></p>
+                <p><strong>Tổng 10 số là: ${sum}</strong></p>
+            `;
+        }
+    </script>
+</body>
+</html>
