@@ -1,1 +1,78 @@
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính tổng từ 1 đến 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .calculation {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff2e6;
+            border-radius: 5px;
+        }
+        .step {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tính tổng các số từ 1 đến 10</h1>
+    
+    <div class="calculation" id="steps"></div>
+    
+    <div class="result" id="result"></div>
 
+    <script>
+        const stepsDiv = document.getElementById('steps');
+        const resultDiv = document.getElementById('result');
+        
+        let sum = 0;
+        let stepsHTML = '';
+        
+        // Vòng lặp for từ 1 đến 10
+        for (let i = 1; i <= 10; i++) {
+            // Sử dụng if để kiểm tra điều kiện (luôn đúng trong trường hợp này)
+            if (i <= 10) {
+                sum += i; // Cộng dồn vào tổng
+                stepsHTML += `<div class="step">Bước ${i}: Tổng = ${sum} (cộng thêm ${i})</div>`;
+            }
+        }
+        
+        // Hiển thị các bước tính toán
+        stepsDiv.innerHTML = stepsHTML;
+        
+        // Hiển thị kết quả cuối cùng
+        resultDiv.textContent = `Tổng các số từ 1 đến 10 là: ${sum}`;
+        
+        // Phiên bản nâng cao: sử dụng if có ý nghĩa hơn
+        let advancedSum = 0;
+        for (let j = 1; j <= 20; j++) {
+            // Chỉ cộng các số từ 1 đến 10
+            if (j <= 10) {
+                advancedSum += j;
+            }
+        }
+        console.log("Kết quả nâng cao (chỉ cộng đến 10 dù vòng lặp chạy đến 20):", advancedSum);
+    </script>
+</body>
+</html>
