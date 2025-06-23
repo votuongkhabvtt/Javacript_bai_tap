@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiển thị Xin chào 10 lần</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .message {
+            font-size: 18px;
+            margin: 10px 0;
+            padding: 8px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hiển thị "Xin chào" 10 lần</h1>
+    <div id="output"></div>
 
+    <script>
+        // Lấy phần tử output
+        const outputDiv = document.getElementById('output');
+        
+        // Sử dụng vòng lặp for để hiển thị 10 lần
+        for (let i = 1; i <= 10; i++) {
+            // Sử dụng if để kiểm tra điều kiện (ở đây luôn đúng để hiển thị)
+            if (i <= 10) {  // Điều kiện này luôn đúng trong trường hợp này
+                // Tạo thẻ div cho mỗi dòng chữ
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message';
+                messageDiv.textContent = i + '. Xin chào!';
+                outputDiv.appendChild(messageDiv);
+            }
+        }
+
+        // Phiên bản khác với if có ý nghĩa hơn
+        const maxLoops = 10;
+        for (let j = 1; j <= 20; j++) {
+            // Chỉ hiển thị khi j <= maxLoops (10)
+            if (j <= maxLoops) {
+                console.log(j + '. Xin chào! (phiên bản if có ý nghĩa)');
+            }
+        }
+    </script>
+</body>
+</html>
