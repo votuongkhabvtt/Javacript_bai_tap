@@ -1,1 +1,78 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In số từ 1 đến 100</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .numbers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+        }
+        .number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f8ff;
+            border: 1px solid #3498db;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .even {
+            background-color: #e6f7ff;
+        }
+        .odd {
+            background-color: #fff2e6;
+        }
+        .multiple-of-5 {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Các số từ 1 đến 100</h1>
+    <div id="numbers" class="numbers-container"></div>
+
+    <script>
+        const numbersContainer = document.getElementById('numbers');
+        
+        // Sử dụng vòng lặp for từ 1 đến 100
+        for (let i = 1; i <= 100; i++) {
+            // Tạo thẻ div cho mỗi số
+            const numberDiv = document.createElement('div');
+            numberDiv.className = 'number';
+            numberDiv.textContent = i;
+            
+            // Sử dụng if để kiểm tra các điều kiện
+            if (i % 2 === 0) {
+                numberDiv.classList.add('even'); // Số chẵn
+            } else {
+                numberDiv.classList.add('odd'); // Số lẻ
+            }
+            
+            if (i % 5 === 0) {
+                numberDiv.classList.add('multiple-of-5'); // Bội số của 5
+            }
+            
+            // Thêm số vào container
+            numbersContainer.appendChild(numberDiv);
+        }
+    </script>
+</body>
+</html>
