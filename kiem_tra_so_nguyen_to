@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra Số Nguyên Tố</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #555;
+        }
+        input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+        .prime {
+            color: #28a745; /* Màu xanh lá cây cho số nguyên tố */
+        }
+        .not-prime {
+            color: #dc3545; /* Màu đỏ cho không phải số nguyên tố */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kiểm tra Số Nguyên Tố</h1>
+        <label for="numberInput">Nhập một số nguyên:</label>
+        <input type="number" id="numberInput" placeholder="Ví dụ: 17">
+        <button onclick="checkPrime()">Kiểm tra</button>
+        <div id="result"></div>
+    </div>
 
+    <script>
+        function isPrime(num) {
+            if (num <= 1) {
+                return false;
+            }
+            // Số 2 là số nguyên tố duy nhất chẵn
+            if (num === 2) {
+                return true;
+            }
+            // Bỏ qua các số chẵn lớn hơn 2
+            if (num % 2 === 0) {
+                return false;
+            }
+            // Kiểm tra từ 3 đến căn bậc hai của số đó, chỉ kiểm tra số lẻ
+            for (let i = 3; i <= Math.sqrt(num); i += 2) {
+                if (num % i === 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function checkPrime() {
+const numberInput = document.getElementById('numberInput');
+            const resultDiv = document.getElementById('result');
+            const num = parseInt(numberInput.value);
+
+            if (isNaN(num)) {
+                resultDiv.textContent = "Vui lòng nhập một số hợp lệ.";
+                resultDiv.className = 'not-prime'; // Sử dụng màu đỏ cho lỗi
+                return;
+            }
+
+            if (isPrime(num)) {
+                resultDiv.textContent = `${num} là số nguyên tố.`;
+                resultDiv.className = 'prime'; // Thêm class 'prime' để đổi màu
+            } else {
+                resultDiv.textContent = `${num} không phải là số nguyên tố.`;
+                resultDiv.className = 'not-prime'; // Thêm class 'not-prime' để đổi màu
+            }
+        }
+    </script>
+</body>
+</html>
