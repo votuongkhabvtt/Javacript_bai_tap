@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chương trình FizzBuzz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        li {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .number {
+            font-weight: bold;
+            color: #666;
+            width: 50px;
+            text-align: right;
+        }
+        .result {
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 10px;
+        }
+        .fizzbuzz {
+            color: #d9534f; /* Red */
+            font-weight: bold;
+        }
+        .fizz {
+            color: #5cb85c; /* Green */
+            font-weight: bold;
+        }
+        .buzz {
+            color: #f0ad4e; /* Orange */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kết quả FizzBuzz từ 1 đến 100</h1>
 
+    <ul id="fizzbuzz-list">
+        </ul>
+
+    <script>
+        // Lấy thẻ <ul> nơi chúng ta sẽ thêm các mục
+        const fizzbuzzList = document.getElementById('fizzbuzz-list');
+
+        // Vòng lặp từ 1 đến 100
+        for (let i = 1; i <= 100; i++) {
+            let output = '';
+            let className = '';
+
+            if (i % 3 === 0 && i % 5 === 0) {
+                output = 'FizzBuzz';
+                className = 'fizzbuzz';
+            } else if (i % 3 === 0) {
+                output = 'Fizz';
+                className = 'fizz';
+            } else if (i % 5 === 0) {
+                output = 'Buzz';
+                className = 'buzz';
+            } else {
+                output = i;
+                className = ''; // Không có class đặc biệt cho số thông thường
+            }
+
+            // Tạo một thẻ <li> mới
+            const listItem = document.createElement('li');
+
+            // Tạo phần hiển thị số
+            const numberSpan = document.createElement('span');
+            numberSpan.classList.add('number');
+            numberSpan.textContent = i + ':';
+            listItem.appendChild(numberSpan);
+// Tạo phần hiển thị kết quả FizzBuzz
+            const resultSpan = document.createElement('span');
+            resultSpan.classList.add('result');
+            if (className) {
+                resultSpan.classList.add(className);
+            }
+            resultSpan.textContent = output;
+            listItem.appendChild(resultSpan);
+
+            // Thêm thẻ <li> vào danh sách
+            fizzbuzzList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
