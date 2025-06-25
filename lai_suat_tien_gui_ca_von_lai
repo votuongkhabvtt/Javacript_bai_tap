@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<body>
 
+    <div class="container">
+        <h2>Chương Trình Tính Lãi Ngân Hàng</h2>
+        <div class="error" id="errorMessages"></div>
+        <label for="principalAmount">Số tiền gửi (VNĐ):</label>
+        <input type="number" id="principalAmount" min="0" value="1000000" placeholder="Nhập số tiền gửi">
+
+        <label for="depositMonths">Số tháng gửi:</label>
+        <input type="number" id="depositMonths" min="1" value="12" placeholder="Nhập số tháng gửi">
+
+        <p>Lãi suất tiết kiệm: <strong>6.5% / năm</strong></p>
+        <p>Kỳ hạn mặc định: <strong>1 năm</strong></p>
+
+        <button onclick="calculateInterest()">Tính Tổng Tiền Nhận Được</button>
+
+        <div class="result" id="totalAmountResult">
+            Tổng số tiền nhận được: 0 VNĐ
+        </div>
+    </div>
+
+    <script>
+        function calculateInterest() {
+            const principalAmountInput = document.getElementById('principalAmount');
+            const depositMonthsInput = document.getElementById('depositMonths');
+            const errorMessagesDiv = document.getElementById('errorMessages');
+            const totalAmountResultDiv = document.getElementById('totalAmountResult');
+errorMessagesDiv.textContent = ''; // Clear previous errors
+
+            const principalAmount = parseFloat(principalAmountInput.value);
+            const depositMonths = parseInt(depositMonthsInput.value);
+            const annualInterestRate = 0.065; // 6.5%
+
+            if (isNaN(principalAmount) || principalAmount <= 0) {
+                errorMessagesDiv.textContent = 'Vui lòng nhập số tiền gửi hợp lệ (phải là số dương).';
+                return;
+            }
+
+            if (isNaN(depositMonths) || depositMonths <= 0) {
+                errorMessagesDiv.textContent = 'Vui lòng nhập số tháng gửi hợp lệ (phải là số nguyên dương).';
+                return;
+            }
+
+            let currentAmount = principalAmount;
+            let remainingMonths = depositMonths;
+            const termInMonths = 12; // Default term is 1 year (12 months)
+
+            while (remainingMonths > 0) {
+                if (remainingMonths >= termInMonths) {
+                    // Calculate interest for a full term (1 year)
+                    currentAmount = currentAmount * (1 + annualInterestRate);
+                    remainingMonths -= termInMonths;
+                } else {
+                    // Calculate interest for the remaining partial term
+                    // For simplicity, we'll pro-rate the interest for partial years.
+                    // In real banking, interest for partial terms might be calculated differently (e.g., non-compounding or lower rates).
+                    // This implementation assumes linear pro-rating of the annual interest.
+                    const partialYearRate = (remainingMonths / termInMonths) * annualInterestRate;
+                    currentAmount = currentAmount * (1 + partialYearRate);
+                    remainingMonths = 0;
+                }
+            }
+
+            totalAmountResultDiv.textContent = `Tổng số tiền nhận được: ${currentAmount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`;
+        }
+    </script>
+
+</body>
+</html>
