@@ -1,1 +1,394 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tủ Thuốc Bắc 100 Ngăn</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        h1 {
+            color: #8B4513;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #5D4037;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .canvas-container {
+            position: relative;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+        
+        #cabinetCanvas {
+            display: block;
+            background-color: #f5f5f5;
+        }
+        
+        .specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f4f0;
+            border-radius: 8px;
+            border-left: 4px solid #8B4513;
+        }
+        
+        .spec-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .spec-card h3 {
+            color: #8B4513;
+            margin-top: 0;
+            border-bottom: 1px dashed #e0d6c9;
+            padding-bottom: 8px;
+        }
+        
+        .spec-card ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        .spec-card li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .color-swatch {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9em;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ddd;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .specs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>THIẾT KẾ TỦ THUỐC BẮC 100 NGĂN</h1>
+        <p class="subtitle">Mỗi ngăn kéo được chia đôi bằng vách ngăn - Màu gỗ đỏ cánh gián</p>
+    </div>
+    
+    <div class="container">
+        <div class="canvas-container">
+            <canvas id="cabinetCanvas" width="900" height="700"></canvas>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #8B4513;"></div>
+                <span>Mặt trước ngăn kéo</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #5D4037;"></div>
+                <span>Vách ngăn</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #A0522D;"></div>
+                <span>Viền trang trí</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #000;"></div>
+                <span>Tay nắm</span>
+            </div>
+        </div>
+        
+        <div class="specs">
+            <div class="spec-card">
+                <h3>Thông số tổng thể</h3>
+                <ul>
+                    <li>Kích thước: Rộng 2.8m × Cao 2m × Sâu 0.6m</li>
+                    <li>Số ngăn kéo: 100 ngăn (10×10)</li>
+                    <li>Mỗi ngăn kéo chia thành 2 ngăn nhỏ</li>
+                    <li>Tổng số ngăn nhỏ: 200 ngăn</li>
+                    <li>Vật liệu: Gỗ công nghiệp Melamine</li>
+                    <li>Màu sắc: <span class="color-swatch" style="background-color: #8B4513;"></span>Đỏ cánh gián</li>
+                </ul>
+            </div>
+            
+            <div class="spec-card">
+                <h3>Thông số ngăn kéo</h3>
+                <ul>
+                    <li>Kích thước ngăn kéo: 15.5cm × 15.5cm × 59cm</li>
+                    <li>Vách ngăn dày: 1cm</li>
+                    <li>Kích thước ngăn nhỏ: 7.25cm × 15.5cm × 29cm</li>
+                    <li>Tay nắm: Tròn đen Ø10mm (2 tay nắm/ngăn)</li>
+                    <li>Hệ thống trượt: Ray bi êm ái</li>
+                    <li>Khả năng chịu tải: 5kg/ngăn nhỏ</li>
+                </ul>
+            </div>
+            
+            <div class="spec-card">
+                <h3>Đặc điểm thiết kế</h3>
+                <ul>
+                    <li>Thanh ngăn đôi ngang ở giữa tủ</li>
+                    <li>Chân tủ chắc chắn cao 10cm</li>
+                    <li>Viền trang trí màu nâu đậm</li>
+                    <li>Kết cấu đối xứng hoàn hảo</li>
+                    <li>Dễ dàng vệ sinh và bảo trì</li>
+                    <li>Thiết kế tối ưu không gian</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('cabinetCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Tỷ lệ vẽ: 1cm thực tế = 2px
+            const scale = 2;
+            
+            // Kích thước tủ (mm)
+            const cabinetWidth = 2800;
+            const cabinetHeight = 2000;
+            const cabinetDepth = 600;
+            
+            // Kích thước ngăn kéo (mm)
+            const drawerHeight = 155;
+            const drawerWidth = 155;
+            const drawerDepth = 590;
+            
+            // Màu sắc
+            const woodColor = '#8B4513';        // Màu gỗ đỏ cánh gián
+            const darkWood = '#5D4037';         // Màu gỗ đậm
+            const accentWood = '#A0522D';       // Màu viền trang trí
+            const dividerColor = '#5D4037';     // Màu vách ngăn
+            const handleColor = '#000';          // Màu tay nắm
+            const baseColor = '#5D4037';         // Màu chân tủ
+            
+            // Tính toán vị trí bắt đầu vẽ tủ
+            const startX = (canvas.width - cabinetWidth * scale / 10) / 2;
+            const startY = 50;
+            
+            // Vẽ nền
+            ctx.fillStyle = '#f5f5f5';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Vẽ chân tủ
+            const baseHeight = 100 * scale / 10;
+            ctx.fillStyle = baseColor;
+            ctx.fillRect(startX, startY + cabinetHeight * scale / 10, cabinetWidth * scale / 10, baseHeight);
+            
+            // Vẽ thân tủ chính
+            ctx.fillStyle = woodColor;
+            ctx.fillRect(startX, startY, cabinetWidth * scale / 10, cabinetHeight * scale / 10);
+            
+            // Vẽ viền trang trí
+            const borderWidth = 50 * scale / 10;
+            ctx.fillStyle = accentWood;
+            // Viền trên
+            ctx.fillRect(startX, startY, cabinetWidth * scale / 10, borderWidth);
+            // Viền dưới
+            ctx.fillRect(startX, startY + cabinetHeight * scale / 10 - borderWidth, cabinetWidth * scale / 10, borderWidth);
+            // Viền trái
+            ctx.fillRect(startX, startY, borderWidth, cabinetHeight * scale / 10);
+            // Viền phải
+            ctx.fillRect(startX + cabinetWidth * scale / 10 - borderWidth, startY, borderWidth, cabinetHeight * scale / 10);
+            
+            // Tính toán vị trí bắt đầu vẽ các ngăn kéo
+            const drawerStartX = startX + borderWidth + 50;
+            const drawerStartY = startY + borderWidth + 50;
+            const drawerAreaWidth = cabinetWidth * scale / 10 - 2 * borderWidth - 100;
+            const drawerAreaHeight = cabinetHeight * scale / 10 - 2 * borderWidth - 100;
+            
+            // Thanh ngăn đôi ngang ở giữa tủ
+            const dividerY = drawerStartY + drawerAreaHeight / 2;
+            ctx.fillStyle = darkWood;
+            ctx.fillRect(drawerStartX, dividerY - 10, drawerAreaWidth, 20);
+            
+            // Vẽ các ngăn kéo
+            const rows = 10;
+            const cols = 10;
+            const drawerPixelWidth = drawerWidth * scale / 10;
+            const drawerPixelHeight = drawerHeight * scale / 10;
+            
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const drawerX = drawerStartX + col * drawerPixelWidth;
+                    const drawerY = drawerStartY + row * drawerPixelHeight;
+                    
+                    // Vẽ mặt trước ngăn kéo
+                    ctx.fillStyle = woodColor;
+                    ctx.fillRect(drawerX, drawerY, drawerPixelWidth, drawerPixelHeight);
+                    
+                    // Vẽ viền ngăn kéo
+                    ctx.strokeStyle = accentWood;
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(drawerX, drawerY, drawerPixelWidth, drawerPixelHeight);
+                    
+                    // Vẽ vách ngăn dọc giữa ngăn kéo (dày 10mm)
+                    const dividerX = drawerX + drawerPixelWidth / 2 - (10 * scale / 10) / 2;
+                    ctx.fillStyle = dividerColor;
+                    ctx.fillRect(dividerX, drawerY, 10 * scale / 10, drawerPixelHeight);
+                    
+                    // Vẽ tay nắm (2 tay nắm cho 2 ngăn nhỏ)
+                    const handleRadius = 5;
+                    
+                    // Tay nắm trái
+                    ctx.beginPath();
+                    ctx.fillStyle = handleColor;
+                    ctx.arc(drawerX + drawerPixelWidth / 4, drawerY + drawerPixelHeight / 2, handleRadius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Tay nắm phải
+                    ctx.beginPath();
+                    ctx.fillStyle = handleColor;
+                    ctx.arc(drawerX + drawerPixelWidth * 3/4, drawerY + drawerPixelHeight / 2, handleRadius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            // Vẽ tiêu đề
+            ctx.font = 'bold 24px Arial';
+            ctx.fillStyle = '#5D4037';
+            ctx.textAlign = 'center';
+            ctx.fillText('THIẾT KẾ TỦ THUỐC BẮC 100 NGĂN', canvas.width / 2, 30);
+            
+            // Vẽ chú thích kích thước
+            ctx.font = '14px Arial';
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'right';
+            ctx.fillText(`Tổng kích thước: ${cabinetWidth/10}cm (rộng) × ${cabinetHeight/10}cm (cao) × ${cabinetDepth/10}cm (sâu)`, canvas.width - 20, canvas.height - 50);
+            
+            ctx.textAlign = 'left';
+            ctx.fillText(`Mỗi ngăn kéo: ${drawerWidth/10}cm × ${drawerHeight/10}cm × ${drawerDepth/10}cm`, 20, canvas.height - 50);
+            ctx.fillText(`Vách ngăn dày: 1cm, Chia mỗi ngăn thành 2 ngăn nhỏ`, 20, canvas.height - 25);
+            
+            // Vẽ hình minh họa ngăn kéo
+            const drawerIllustrationX = startX + cabinetWidth * scale / 10 + 50;
+            const drawerIllustrationY = startY + 150;
+            
+            // Vẽ mặt trước ngăn kéo minh họa
+            ctx.fillStyle = woodColor;
+            ctx.fillRect(drawerIllustrationX, drawerIllustrationY, drawerPixelWidth * 1.5, drawerPixelHeight * 1.5);
+            
+            // Vẽ vách ngăn
+            ctx.fillStyle = dividerColor;
+            ctx.fillRect(drawerIllustrationX + drawerPixelWidth * 1.5 / 2 - (10 * scale / 10)/2, 
+                         drawerIllustrationY, 
+                         10 * scale / 10, 
+                         drawerPixelHeight * 1.5);
+            
+            // Vẽ tay nắm
+            ctx.beginPath();
+            ctx.fillStyle = handleColor;
+            ctx.arc(drawerIllustrationX + drawerPixelWidth * 1.5 / 4, drawerIllustrationY + drawerPixelHeight * 1.5 / 2, 8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.fillStyle = handleColor;
+            ctx.arc(drawerIllustrationX + drawerPixelWidth * 1.5 * 3/4, drawerIllustrationY + drawerPixelHeight * 1.5 / 2, 8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Vẽ chú thích cho minh họa
+            ctx.font = 'bold 14px Arial';
+            ctx.fillStyle = '#333';
+            ctx.textAlign = 'left';
+            ctx.fillText('Minh họa ngăn kéo:', drawerIllustrationX, drawerIllustrationY - 10);
+            
+            ctx.font = '12px Arial';
+            ctx.fillText('Tay nắm', drawerIllustrationX + drawerPixelWidth * 1.5 + 10, drawerIllustrationY + 30);
+            ctx.fillText('Vách ngăn dày 1cm', drawerIllustrationX + drawerPixelWidth * 1.5 + 10, drawerIllustrationY + 60);
+            ctx.fillText('Mặt trước ngăn kéo', drawerIllustrationX + drawerPixelWidth * 1.5 + 10, drawerIllustrationY + 90);
+            
+            // Vẽ mũi tên chỉ dẫn
+            ctx.beginPath();
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.moveTo(drawerIllustrationX + drawerPixelWidth * 1.5 + 5, drawerIllustrationY + 30);
+            ctx.lineTo(drawerIllustrationX + drawerPixelWidth * 1.5 - 10, drawerIllustrationY + drawerPixelHeight * 1.5 / 2);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(drawerIllustrationX + drawerPixelWidth * 1.5 + 5, drawerIllustrationY + 60);
+            ctx.lineTo(drawerIllustrationX + drawerPixelWidth * 1.5 / 2, drawerIllustrationY + drawerPixelHeight * 1.5 / 2);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(drawerIllustrationX + drawerPixelWidth * 1.5 + 5, drawerIllustrationY + 90);
+            ctx.lineTo(drawerIllustrationX + drawerPixelWidth * 1.5 / 4, drawerIllustrationY + drawerPixelHeight * 1.5 / 2);
+            ctx.stroke();
+        });
+    </script>
+</body>
+</html>
