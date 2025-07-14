@@ -1,1 +1,650 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tủ Thuốc Bắc - Góc Nhìn Mặt Nghiêng</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            max-width: 1000px;
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+        
+        .subtitle {
+            color: #3498db;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(10, 15, 30, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            max-width: 1200px;
+            width: 100%;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .canvas-container {
+            position: relative;
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(45deg, #1a1a2e 0%, #16213e 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        canvas {
+            display: block;
+            background: #0a0f1f;
+        }
+        
+        .specs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            margin-top: 25px;
+        }
+        
+        .spec-card {
+            background: rgba(30, 40, 70, 0.6);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .spec-card:hover {
+            transform: translateY(-8px);
+            background: rgba(40, 55, 90, 0.7);
+        }
+        
+        .spec-card h3 {
+            color: #3498db;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(231, 76, 60, 0.5);
+        }
+        
+        .spec-card ul {
+            padding-left: 25px;
+            margin: 15px 0;
+        }
+        
+        .spec-card li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            color: #ecf0f1;
+            position: relative;
+        }
+        
+        .spec-card li:before {
+            content: "•";
+            color: #e74c3c;
+            font-size: 1.5rem;
+            position: absolute;
+            left: -20px;
+            top: -2px;
+        }
+        
+        .dimension {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 0 5px;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .view-btn {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            min-width: 240px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .view-btn:hover {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        }
+        
+        .view-btn.active {
+            background: linear-gradient(135deg, #e74c3c 0%, #3498db 100%);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            padding: 20px;
+            max-width: 1000px;
+        }
+        
+        @media (max-width: 900px) {
+            .canvas-container {
+                height: 400px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>THIẾT KẾ TỦ THUỐC BẮC 150 NGĂN</h1>
+        <p class="subtitle">Góc nhìn mặt nghiêng bên trái - Mỗi ngăn chia đôi bằng vách ngăn dọc</p>
+    </div>
+    
+    <div class="container">
+        <div class="canvas-container">
+            <canvas id="cabinetCanvas"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button class="view-btn active">Góc Nhìn Mặt Nghiêng</button>
+        </div>
+        
+        <div class="specs-container">
+            <div class="spec-card">
+                <h3>THÔNG SỐ TỦ</h3>
+                <ul>
+                    <li>Kích thước tủ: Rộng <span class="dimension">3.8m</span> × Cao <span class="dimension">2m</span> × Sâu <span class="dimension">0.6m</span></li>
+                    <li>Số ngăn kéo: <span class="dimension">150 ngăn</span> (10 hàng × 15 cột)</li>
+                    <li>Tổng số ngăn nhỏ: <span class="dimension">300 ngăn</span></li>
+                    <li>Vật liệu: Gỗ công nghiệp Melamine cao cấp</li>
+                    <li>Màu sắc: Gỗ đỏ cánh gián</li>
+                </ul>
+            </div>
+            
+            <div class="spec-card">
+                <h3>THÔNG SỐ NGĂN KÉO</h3>
+                <ul>
+                    <li>Kích thước ngăn kéo: <span class="dimension">15.5cm</span> (cao) × <span class="dimension">15.5cm</span> (rộng) × <span class="dimension">59cm</span> (sâu)</li>
+                    <li>Vách ngăn dọc: Dày <span class="dimension">1cm</span> chia đôi ngăn kéo</li>
+                    <li>Kích thước ngăn nhỏ: <span class="dimension">15.5cm</span> (cao) × <span class="dimension">15.5cm</span> (rộng) × <span class="dimension">29cm</span> (sâu)</li>
+                    <li>Tay nắm: Tròn đen Ø12mm đặt giữa mặt trước</li>
+                </ul>
+            </div>
+            
+            <div class="spec-card">
+                <h3>ĐẶC ĐIỂM THIẾT KẾ</h3>
+                <ul>
+                    <li>Vách ngăn dọc chia đôi ngăn kéo thành 2 ngăn độc lập</li>
+                    <li>Chân tủ chắc chắn cao 10cm</li>
+                    <li>Hệ thống ray trượt êm ái cho từng ngăn kéo</li>
+                    <li>Thanh ngăn ngang ở giữa chia tủ thành 2 tầng</li>
+                    <li>Thiết kế tối ưu không gian lưu trữ</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        Thiết kế tủ thuốc bắc 150 ngăn với góc nhìn mặt nghiêng bên trái | Mỗi ngăn kéo chia đôi bằng vách ngăn dọc
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('cabinetCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Thiết lập kích thước canvas
+            canvas.width = document.querySelector('.canvas-container').clientWidth;
+            canvas.height = document.querySelector('.canvas-container').clientHeight;
+            
+            // Kích thước tủ (mm) - Rộng 3.8m (3800mm)
+            const cabinetWidth = 3800;
+            const cabinetHeight = 2000;
+            const cabinetDepth = 600;
+            
+            // Kích thước ngăn kéo (mm)
+            const drawerHeight = 155;
+            const drawerWidth = 155;
+            const drawerDepth = 590;
+            
+            // Màu sắc
+            const woodColor = '#8B4513';
+            const darkWood = '#5D4037';
+            const lightWood = '#A0522D';
+            const drawerFrontColor = '#7D3C1F';
+            const drawerSideColor = '#6B2B0F';
+            const handleColor = '#2C3E50';
+            const highlightColor = '#E74C3C';
+            const baseColor = '#5D4037';
+            
+            // Tỷ lệ vẽ
+            const scale = Math.min(canvas.width / (cabinetWidth * 1.5), canvas.height / (cabinetHeight * 1.2));
+            
+            // Góc nhìn nghiêng
+            const angle = Math.PI / 6; // 30 độ
+            
+            // Hàm chuyển đổi tọa độ 3D sang 2D với góc nhìn nghiêng
+            function project(x, y, z) {
+                const projectedX = (x - z * Math.cos(angle)) * scale + canvas.width * 0.5;
+                const projectedY = canvas.height * 0.9 - (y + z * Math.sin(angle)) * scale;
+                return { x: projectedX, y: projectedY };
+            }
+            
+            // Vẽ tủ
+            function drawCabinet() {
+                // Xóa canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Vẽ nền
+                const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                gradient.addColorStop(0, '#1a1a2e');
+                gradient.addColorStop(1, '#16213e');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Vẽ chân tủ
+                const basePoints = [
+                    project(0, 0, 0),
+                    project(cabinetWidth, 0, 0),
+                    project(cabinetWidth, 0, cabinetDepth),
+                    project(0, 0, cabinetDepth)
+                ];
+                
+                ctx.beginPath();
+                ctx.moveTo(basePoints[0].x, basePoints[0].y);
+                for (let i = 1; i < basePoints.length; i++) {
+                    ctx.lineTo(basePoints[i].x, basePoints[i].y);
+                }
+                ctx.closePath();
+                
+                const baseGradient = ctx.createLinearGradient(0, basePoints[0].y, 0, basePoints[0].y + 100);
+                baseGradient.addColorStop(0, '#4A2C1D');
+                baseGradient.addColorStop(1, '#2E1A0F');
+                ctx.fillStyle = baseGradient;
+                ctx.fill();
+                
+                // Vẽ thân tủ
+                const bodyPoints = [
+                    project(0, 0, 0),
+                    project(cabinetWidth, 0, 0),
+                    project(cabinetWidth, cabinetHeight, 0),
+                    project(0, cabinetHeight, 0),
+                    project(0, cabinetHeight, cabinetDepth),
+                    project(0, 0, cabinetDepth),
+                    project(cabinetWidth, 0, cabinetDepth),
+                    project(cabinetWidth, cabinetHeight, cabinetDepth)
+                ];
+                
+                // Mặt trái
+                ctx.beginPath();
+                ctx.moveTo(bodyPoints[0].x, bodyPoints[0].y);
+                ctx.lineTo(bodyPoints[5].x, bodyPoints[5].y);
+                ctx.lineTo(bodyPoints[4].x, bodyPoints[4].y);
+                ctx.lineTo(bodyPoints[3].x, bodyPoints[3].y);
+                ctx.closePath();
+                
+                const leftGradient = ctx.createLinearGradient(
+                    bodyPoints[0].x, bodyPoints[0].y,
+                    bodyPoints[3].x, bodyPoints[3].y
+                );
+                leftGradient.addColorStop(0, '#6B2B0F');
+                leftGradient.addColorStop(1, '#8B4513');
+                ctx.fillStyle = leftGradient;
+                ctx.fill();
+                
+                // Mặt trên
+                ctx.beginPath();
+                ctx.moveTo(bodyPoints[2].x, bodyPoints[2].y);
+                ctx.lineTo(bodyPoints[3].x, bodyPoints[3].y);
+                ctx.lineTo(bodyPoints[4].x, bodyPoints[4].y);
+                ctx.lineTo(bodyPoints[7].x, bodyPoints[7].y);
+                ctx.closePath();
+                
+                const topGradient = ctx.createLinearGradient(
+                    bodyPoints[3].x, bodyPoints[3].y,
+                    bodyPoints[2].x, bodyPoints[2].y
+                );
+                topGradient.addColorStop(0, '#5D4037');
+                topGradient.addColorStop(1, '#8B4513');
+                ctx.fillStyle = topGradient;
+                ctx.fill();
+                
+                // Mặt trước
+                ctx.beginPath();
+                ctx.moveTo(bodyPoints[0].x, bodyPoints[0].y);
+                ctx.lineTo(bodyPoints[1].x, bodyPoints[1].y);
+                ctx.lineTo(bodyPoints[2].x, bodyPoints[2].y);
+                ctx.lineTo(bodyPoints[3].x, bodyPoints[3].y);
+                ctx.closePath();
+                
+                const frontGradient = ctx.createLinearGradient(
+                    bodyPoints[0].x, bodyPoints[0].y,
+                    bodyPoints[0].x, bodyPoints[3].y
+                );
+                frontGradient.addColorStop(0, '#8B4513');
+                frontGradient.addColorStop(1, '#6B2B0F');
+                ctx.fillStyle = frontGradient;
+                ctx.fill();
+                
+                // Vẽ thanh ngăn giữa
+                const midHeight = cabinetHeight / 2;
+                const midPoints = [
+                    project(0, midHeight, 0),
+                    project(cabinetWidth, midHeight, 0),
+                    project(cabinetWidth, midHeight, cabinetDepth),
+                    project(0, midHeight, cabinetDepth)
+                ];
+                
+                ctx.beginPath();
+                ctx.moveTo(midPoints[0].x, midPoints[0].y);
+                ctx.lineTo(midPoints[1].x, midPoints[1].y);
+                ctx.lineTo(midPoints[2].x, midPoints[2].y);
+                ctx.lineTo(midPoints[3].x, midPoints[3].y);
+                ctx.closePath();
+                
+                ctx.fillStyle = 'rgba(60, 30, 15, 0.7)';
+                ctx.fill();
+                
+                // Vẽ các ngăn kéo - 10 hàng x 15 cột
+                const rows = 10;
+                const cols = 15;
+                
+                for (let row = 0; row < rows; row++) {
+                    for (let col = 0; col < cols; col++) {
+                        // Tọa độ của ngăn kéo
+                        const drawerX = col * drawerWidth;
+                        const drawerY = row * drawerHeight;
+                        
+                        // Vẽ mặt trước ngăn kéo
+                        const frontPoints = [
+                            project(drawerX, drawerY, 0),
+                            project(drawerX + drawerWidth, drawerY, 0),
+                            project(drawerX + drawerWidth, drawerY + drawerHeight, 0),
+                            project(drawerX, drawerY + drawerHeight, 0)
+                        ];
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(frontPoints[0].x, frontPoints[0].y);
+                        ctx.lineTo(frontPoints[1].x, frontPoints[1].y);
+                        ctx.lineTo(frontPoints[2].x, frontPoints[2].y);
+                        ctx.lineTo(frontPoints[3].x, frontPoints[3].y);
+                        ctx.closePath();
+                        
+                        // Tạo hiệu ứng 3D cho mặt trước ngăn kéo
+                        const drawerGradient = ctx.createLinearGradient(
+                            frontPoints[0].x, frontPoints[0].y,
+                            frontPoints[3].x, frontPoints[3].y
+                        );
+                        
+                        if (row < rows / 2) {
+                            drawerGradient.addColorStop(0, '#7D3C1F');
+                            drawerGradient.addColorStop(1, '#6B2B0F');
+                        } else {
+                            drawerGradient.addColorStop(0, '#6B2B0F');
+                            drawerGradient.addColorStop(1, '#7D3C1F');
+                        }
+                        
+                        ctx.fillStyle = drawerGradient;
+                        ctx.fill();
+                        ctx.strokeStyle = 'rgba(45, 20, 10, 0.8)';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                        
+                        // Vẽ tay nắm
+                        const handleX = drawerX + drawerWidth / 2;
+                        const handleY = drawerY + drawerHeight / 2;
+                        const handlePos = project(handleX, handleY, 0);
+                        
+                        ctx.beginPath();
+                        ctx.arc(handlePos.x, handlePos.y, 5 * scale, 0, Math.PI * 2);
+                        ctx.fillStyle = handleColor;
+                        ctx.fill();
+                        
+                        // Vẽ hiệu ứng nổi bật cho tay nắm
+                        ctx.beginPath();
+                        ctx.arc(handlePos.x - 1.5 * scale, handlePos.y - 1.5 * scale, 2 * scale, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                        ctx.fill();
+                        
+                        // Vẽ vách ngăn dọc (chỉ hiển thị ở mặt bên)
+                        if (col === 0) {
+                            const dividerPoints = [
+                                project(drawerX, drawerY, 0),
+                                project(drawerX, drawerY + drawerHeight, 0),
+                                project(drawerX, drawerY + drawerHeight, drawerDepth),
+                                project(drawerX, drawerY, drawerDepth)
+                            ];
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(dividerPoints[0].x, dividerPoints[0].y);
+                            ctx.lineTo(dividerPoints[1].x, dividerPoints[1].y);
+                            ctx.lineTo(dividerPoints[2].x, dividerPoints[2].y);
+                            ctx.lineTo(dividerPoints[3].x, dividerPoints[3].y);
+                            ctx.closePath();
+                            
+                            ctx.fillStyle = 'rgba(60, 30, 15, 0.8)';
+                            ctx.fill();
+                        }
+                    }
+                }
+                
+                // Vẽ mặt bên trái với các ngăn kéo
+                for (let row = 0; row < rows; row++) {
+                    const drawerY = row * drawerHeight;
+                    
+                    const sidePoints = [
+                        project(0, drawerY, 0),
+                        project(0, drawerY, cabinetDepth),
+                        project(0, drawerY + drawerHeight, cabinetDepth),
+                        project(0, drawerY + drawerHeight, 0)
+                    ];
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(sidePoints[0].x, sidePoints[0].y);
+                    ctx.lineTo(sidePoints[1].x, sidePoints[1].y);
+                    ctx.lineTo(sidePoints[2].x, sidePoints[2].y);
+                    ctx.lineTo(sidePoints[3].x, sidePoints[3].y);
+                    ctx.closePath();
+                    
+                    const sideGradient = ctx.createLinearGradient(
+                        sidePoints[0].x, sidePoints[0].y,
+                        sidePoints[1].x, sidePoints[1].y
+                    );
+                    
+                    if (row < rows / 2) {
+                        sideGradient.addColorStop(0, '#6B2B0F');
+                        sideGradient.addColorStop(1, '#8B4513');
+                    } else {
+                        sideGradient.addColorStop(0, '#8B4513');
+                        sideGradient.addColorStop(1, '#6B2B0F');
+                    }
+                    
+                    ctx.fillStyle = sideGradient;
+                    ctx.fill();
+                    ctx.strokeStyle = 'rgba(45, 20, 10, 0.8)';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+                
+                // Vẽ đường ray trượt
+                for (let row = 0; row < rows; row++) {
+                    const railY = row * drawerHeight + drawerHeight - 10;
+                    
+                    const railPoints = [
+                        project(0, railY, 0),
+                        project(0, railY, cabinetDepth),
+                        project(0, railY + 5, cabinetDepth),
+                        project(0, railY + 5, 0)
+                    ];
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(railPoints[0].x, railPoints[0].y);
+                    ctx.lineTo(railPoints[1].x, railPoints[1].y);
+                    ctx.lineTo(railPoints[2].x, railPoints[2].y);
+                    ctx.lineTo(railPoints[3].x, railPoints[3].y);
+                    ctx.closePath();
+                    
+                    ctx.fillStyle = 'rgba(200, 200, 200, 0.6)';
+                    ctx.fill();
+                    
+                    // Hiệu ứng kim loại
+                    ctx.beginPath();
+                    ctx.moveTo(railPoints[0].x, railPoints[0].y);
+                    ctx.lineTo(railPoints[1].x, railPoints[1].y);
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+                
+                // Vẽ hiệu ứng ánh sáng
+                const lightSource = { x: canvas.width * 0.8, y: canvas.height * 0.2 };
+                
+                // Hiệu ứng ánh sáng trên mặt trước
+                const frontLight = ctx.createRadialGradient(
+                    lightSource.x, lightSource.y, 10,
+                    lightSource.x, lightSource.y, canvas.width * 0.8
+                );
+                frontLight.addColorStop(0, 'rgba(231, 76, 60, 0.1)');
+                frontLight.addColorStop(1, 'rgba(231, 76, 60, 0)');
+                ctx.fillStyle = frontLight;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Hiệu ứng ánh sáng trên mặt bên
+                const sideLight = ctx.createRadialGradient(
+                    canvas.width * 0.3, canvas.height * 0.5, 10,
+                    canvas.width * 0.3, canvas.height * 0.5, canvas.width * 0.6
+                );
+                sideLight.addColorStop(0, 'rgba(52, 152, 219, 0.1)');
+                sideLight.addColorStop(1, 'rgba(52, 152, 219, 0)');
+                ctx.fillStyle = sideLight;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Vẽ kích thước tủ
+                drawDimension(project(0, 0, 0), project(0, cabinetHeight, 0), '200cm');
+                drawDimension(project(0, 0, 0), project(cabinetWidth, 0, 0), '380cm');
+                drawDimension(project(0, 0, 0), project(0, 0, cabinetDepth), '60cm');
+            }
+            
+            // Hàm vẽ kích thước
+            function drawDimension(start, end, label) {
+                const midX = (start.x + end.x) / 2;
+                const midY = (start.y + end.y) / 2;
+                
+                // Tính góc của đường kích thước
+                const angle = Math.atan2(end.y - start.y, end.x - start.x);
+                const offset = 20;
+                
+                // Vẽ đường kích thước
+                ctx.beginPath();
+                ctx.moveTo(start.x, start.y);
+                ctx.lineTo(end.x, end.y);
+                ctx.strokeStyle = '#3498db';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Vẽ mũi tên
+                const arrowSize = 8;
+                ctx.beginPath();
+                ctx.moveTo(end.x, end.y);
+                ctx.lineTo(
+                    end.x - arrowSize * Math.cos(angle - Math.PI/6),
+                    end.y - arrowSize * Math.sin(angle - Math.PI/6)
+                );
+                ctx.lineTo(
+                    end.x - arrowSize * Math.cos(angle + Math.PI/6),
+                    end.y - arrowSize * Math.sin(angle + Math.PI/6)
+                );
+                ctx.closePath();
+                ctx.fillStyle = '#3498db';
+                ctx.fill();
+                
+                // Vẽ nhãn kích thước
+                ctx.font = 'bold 16px Arial';
+                ctx.fillStyle = '#ecf0f1';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(label, midX + Math.sin(angle) * offset, midY - Math.cos(angle) * offset);
+            }
+            
+            // Khởi chạy vẽ tủ
+            drawCabinet();
+            
+            // Xử lý thay đổi kích thước cửa sổ
+            window.addEventListener('resize', function() {
+                canvas.width = document.querySelector('.canvas-container').clientWidth;
+                canvas.height = document.querySelector('.canvas-container').clientHeight;
+                drawCabinet();
+            });
+        });
+    </script>
+</body>
+</html>
