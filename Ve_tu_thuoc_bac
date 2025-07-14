@@ -3,40 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tủ Thuốc Bắc - Ngăn Kéo Chia Đôi</title>
+    <title>Tủ Thuốc Bắc 150 Ngăn Kéo</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f4f0 0%, #e8dfd3 100%);
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f4f0 0%, #e8dfd3 100%);
+            min-height: 100vh;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
             color: #5D4037;
         }
         
         .header {
             text-align: center;
             margin-bottom: 20px;
-            width: 100%;
-            max-width: 1000px;
+            max-width: 1200px;
             background: rgba(139, 69, 19, 0.1);
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
         
         h1 {
             color: #5D4037;
             margin-bottom: 10px;
+            font-size: 2.2rem;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         .subtitle {
             color: #8B4513;
-            font-size: 1.1em;
+            font-size: 1.2rem;
             margin-bottom: 15px;
         }
         
@@ -45,18 +50,18 @@
             flex-direction: column;
             align-items: center;
             background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
             padding: 25px;
+            max-width: 1200px;
             width: 100%;
-            max-width: 1000px;
         }
         
         .canvas-container {
             position: relative;
             margin: 20px 0;
-            border: 1px solid #d7ccc8;
-            border-radius: 8px;
+            border: 2px solid #d7ccc8;
+            border-radius: 10px;
             overflow: hidden;
             background: #f9f9f9;
             width: 100%;
@@ -69,88 +74,99 @@
             background-color: #faf6f2;
         }
         
-        .specs {
+        .specs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             width: 100%;
             margin-top: 25px;
-            padding: 20px;
-            background: #faf3eb;
-            border-radius: 8px;
-            border-left: 5px solid #8B4513;
         }
         
         .spec-card {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            transition: transform 0.3s ease;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid #8B4513;
         }
         
         .spec-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-7px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
         
         .spec-card h3 {
             color: #8B4513;
             margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            padding-bottom: 12px;
             border-bottom: 2px solid #e8dfd3;
-            padding-bottom: 10px;
-            font-size: 1.3em;
         }
         
         .spec-card ul {
-            padding-left: 20px;
+            padding-left: 25px;
             margin: 15px 0;
         }
         
         .spec-card li {
-            margin-bottom: 10px;
-            line-height: 1.5;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+        
+        .highlight {
+            background-color: #fff8e1;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #5D4037;
         }
         
         .color-swatch {
             display: inline-block;
-            width: 22px;
-            height: 22px;
-            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
             vertical-align: middle;
             margin-right: 10px;
             border: 1px solid rgba(0,0,0,0.1);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
         }
         
         .drawer-detail {
             display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
+            justify-content: space-between;
+            margin-top: 30px;
             width: 100%;
+            gap: 25px;
             flex-wrap: wrap;
-            gap: 20px;
         }
         
         .detail-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             flex: 1;
-            min-width: 250px;
+            min-width: 280px;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             border-top: 4px solid #8B4513;
         }
         
         .detail-card h4 {
             color: #5D4037;
             margin-top: 0;
+            margin-bottom: 20px;
             text-align: center;
+            font-size: 1.3rem;
         }
         
         .controls {
-            margin: 20px 0;
+            margin: 25px 0;
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -159,68 +175,84 @@
             background: #8B4513;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 14px 32px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(139, 69, 19, 0.3);
+            box-shadow: 0 5px 12px rgba(139, 69, 19, 0.35);
+            font-weight: 600;
+            min-width: 220px;
         }
         
         button:hover {
             background: #A0522D;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(139, 69, 19, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(139, 69, 19, 0.45);
         }
         
-        .highlight {
-            background-color: #fff8e1;
-            padding: 3px 6px;
+        button.active {
+            background: #5D4037;
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.5);
+        }
+        
+        .dimension-highlight {
+            display: inline-block;
+            padding: 2px 10px;
+            background: #8B4513;
+            color: white;
             border-radius: 4px;
             font-weight: bold;
+            margin: 0 3px;
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .container {
                 padding: 15px;
-            }
-            
-            .specs {
-                grid-template-columns: 1fr;
             }
             
             #cabinetCanvas {
                 width: 100%;
                 height: auto;
             }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>THIẾT KẾ TỦ THUỐC BẮC VỚI NGĂN KÉO CHIA ĐÔI</h1>
-        <p class="subtitle">Mỗi ngăn kéo được chia đôi bằng vách ngăn dọc - Màu gỗ đỏ cánh gián</p>
+        <h1>THIẾT KẾ TỦ THUỐC BẮC 150 NGĂN KÉO</h1>
+        <p class="subtitle">Mỗi ngăn kéo chia đôi bằng vách ngăn dọc - Kích thước rộng 3.8m</p>
     </div>
     
     <div class="container">
         <div class="canvas-container">
-            <canvas id="cabinetCanvas" width="900" height="700"></canvas>
+            <canvas id="cabinetCanvas" width="1100" height="700"></canvas>
         </div>
         
         <div class="controls">
-            <button id="viewFront">Xem mặt trước</button>
-            <button id="viewSide">Xem mặt cắt ngang</button>
-            <button id="viewDrawer">Xem chi tiết ngăn kéo</button>
+            <button id="viewFront" class="active">Mặt trước tủ</button>
+            <button id="viewSide">Mặt cắt ngang</button>
+            <button id="viewDrawer">Chi tiết ngăn kéo</button>
         </div>
         
-        <div class="specs">
+        <div class="specs-grid">
             <div class="spec-card">
                 <h3>Thông số tổng thể</h3>
                 <ul>
-                    <li><span class="highlight">Kích thước tủ</span>: Rộng 2.8m × Cao 2m × Sâu 0.6m</li>
-                    <li><span class="highlight">Số ngăn kéo</span>: 100 ngăn (10 hàng × 10 cột)</li>
+                    <li><span class="highlight">Kích thước tủ</span>: Rộng <span class="dimension-highlight">3.8m</span> × Cao <span class="dimension-highlight">2m</span> × Sâu <span class="dimension-highlight">0.6m</span></li>
+                    <li><span class="highlight">Số ngăn kéo</span>: 150 ngăn (10 hàng × 15 cột)</li>
                     <li>Mỗi ngăn kéo chia thành 2 ngăn nhỏ bằng vách dọc</li>
-                    <li><span class="highlight">Tổng số ngăn nhỏ</span>: 200 ngăn</li>
+                    <li><span class="highlight">Tổng số ngăn nhỏ</span>: 300 ngăn</li>
                     <li>Vật liệu: Gỗ công nghiệp Melamine cao cấp</li>
                     <li>Màu sắc: <span class="color-swatch" style="background-color: #8B4513;"></span>Gỗ đỏ cánh gián</li>
                 </ul>
@@ -229,12 +261,11 @@
             <div class="spec-card">
                 <h3>Thông số ngăn kéo</h3>
                 <ul>
-                    <li><span class="highlight">Kích thước ngăn kéo</span>: 15.5cm (cao) × 15.5cm (rộng) × 59cm (sâu)</li>
-                    <li><span class="highlight">Vách ngăn dọc</span>: Cao 15.5cm × Rộng 15.5cm × Dày 1cm</li>
-                    <li><span class="highlight">Kích thước ngăn nhỏ</span>: 15.5cm (cao) × 15.5cm (rộng) × 29cm (sâu)</li>
+                    <li><span class="highlight">Kích thước ngăn kéo</span>: <span class="dimension-highlight">15.5cm</span> (cao) × <span class="dimension-highlight">15.5cm</span> (rộng) × <span class="dimension-highlight">59cm</span> (sâu)</li>
+                    <li><span class="highlight">Vách ngăn dọc</span>: Cao <span class="dimension-highlight">15.5cm</span> × Rộng <span class="dimension-highlight">15.5cm</span> × Dày <span class="dimension-highlight">1cm</span></li>
+                    <li><span class="highlight">Kích thước ngăn nhỏ</span>: <span class="dimension-highlight">15.5cm</span> (cao) × <span class="dimension-highlight">15.5cm</span> (rộng) × <span class="dimension-highlight">29cm</span> (sâu)</li>
                     <li>Tay nắm: Tròn đen Ø12mm đặt giữa mặt trước</li>
                     <li>Hệ thống trượt: Ray bi êm ái chịu lực 10kg</li>
-                    <li>Khả năng chịu tải: 4kg/ngăn nhỏ</li>
                 </ul>
             </div>
             
@@ -247,41 +278,41 @@
                     <li>Thanh ngăn ngang ở giữa chia tủ thành 2 tầng</li>
                     <li>Dễ dàng vệ sinh và bảo trì</li>
                     <li>Thiết kế tối ưu không gian lưu trữ</li>
+                    <li>Màu sắc truyền thống, phù hợp không gian y học cổ truyền</li>
                 </ul>
             </div>
         </div>
         
         <div class="drawer-detail">
             <div class="detail-card">
-                <h4>Thông số vách ngăn</h4>
+                <h4>Thông số kỹ thuật</h4>
                 <ul>
-                    <li>Chất liệu: Gỗ công nghiệp dày 1cm</li>
-                    <li>Chiều cao: 15.5cm</li>
-                    <li>Chiều rộng: 15.5cm</li>
-                    <li>Vị trí: Chia đôi ngăn kéo theo chiều sâu</li>
-                    <li>Màu sắc: Đồng nhất với tủ</li>
+                    <li>Vật liệu chính: Gỗ công nghiệp Melamine dày 18mm</li>
+                    <li>Hệ thống ray: Ray bi dài 55cm, tải trọng 15kg</li>
+                    <li>Độ bền: >100,000 lần mở/đóng</li>
+                    <li>Màu sắc: Đỏ cánh gián phủ melamine chống trầy</li>
+                    <li>Trọng lượng tủ: ~250kg</li>
                 </ul>
             </div>
             
             <div class="detail-card">
-                <h4>Thông số ngăn nhỏ</h4>
+                <h4>Khả năng lưu trữ</h4>
                 <ul>
-                    <li>Sâu: 29cm</li>
-                    <li>Rộng: 15.5cm</li>
-                    <li>Cao: 15.5cm</li>
-                    <li>Dung tích: ~7 lít</li>
-                    <li>Khay trượt riêng biệt</li>
+                    <li>Mỗi ngăn nhỏ chứa được 0.5-1kg thuốc bắc</li>
+                    <li>Tổng dung tích lưu trữ: ~450kg thuốc bắc</li>
+                    <li>300 ngăn nhỏ phân loại thuốc dễ dàng</li>
+                    <li>Thiết kế chống ẩm, bảo quản thuốc tốt</li>
                 </ul>
             </div>
             
             <div class="detail-card">
-                <h4>Hệ thống trượt</h4>
+                <h4>Ưu điểm nổi bật</h4>
                 <ul>
-                    <li>Loại: Ray bi êm ái</li>
-                    <li>Chiều dài: 55cm</li>
-                    <li>Tải trọng: 10kg/ngăn</li>
-                    <li>Độ bền: >50,000 lần mở</li>
-                    <li>Chống ồn, vận hành mượt mà</li>
+                    <li>Thiết kế rộng 3.8m tăng không gian lưu trữ</li>
+                    <li>Vách ngăn dày 1cm chắc chắn, bền vững</li>
+                    <li>Dễ dàng truy cập thuốc với hệ thống ray trượt</li>
+                    <li>Mặt trước ngăn kéo chống bám bụi</li>
+                    <li>Góc cạnh bo tròn an toàn</li>
                 </ul>
             </div>
         </div>
@@ -296,10 +327,10 @@
             const viewDrawerBtn = document.getElementById('viewDrawer');
             
             // Tỷ lệ vẽ
-            let scale = 2;
+            let scale = 1.8;
             
-            // Kích thước tủ (mm)
-            const cabinetWidth = 2800;
+            // Kích thước tủ (mm) - Rộng 3.8m (3800mm)
+            const cabinetWidth = 3800;
             const cabinetHeight = 2000;
             const cabinetDepth = 600;
             
@@ -309,12 +340,12 @@
             const drawerDepth = 590;
             
             // Màu sắc
-            const woodColor = '#8B4513';        // Màu gỗ đỏ cánh gián
-            const darkWood = '#5D4037';         // Màu gỗ đậm
-            const accentWood = '#A0522D';       // Màu viền trang trí
-            const handleColor = '#000';         // Màu tay nắm
-            const baseColor = '#5D4037';        // Màu chân tủ
-            const dividerColor = '#5D4037';     // Màu vách ngăn
+            const woodColor = '#8B4513';
+            const darkWood = '#5D4037';
+            const accentWood = '#A0522D';
+            const handleColor = '#000';
+            const baseColor = '#5D4037';
+            const dividerColor = '#5D4037';
             
             // Biến trạng thái
             let currentView = 'front';
@@ -378,9 +409,9 @@
                 ctx.fillStyle = darkWood;
                 ctx.fillRect(drawerStartX, dividerY - 10, drawerAreaWidth, 20);
                 
-                // Vẽ các ngăn kéo
+                // Vẽ các ngăn kéo - 10 hàng x 15 cột
                 const rows = 10;
-                const cols = 10;
+                const cols = 15;
                 const drawerPixelWidth = drawerWidth * scale / 10;
                 const drawerPixelHeight = drawerHeight * scale / 10;
                 
@@ -411,13 +442,13 @@
                 ctx.font = 'bold 28px Arial';
                 ctx.fillStyle = '#5D4037';
                 ctx.textAlign = 'center';
-                ctx.fillText('THIẾT KẾ TỦ THUỐC BẮC - MẶT TRƯỚC', canvas.width / 2, 40);
+                ctx.fillText('THIẾT KẾ TỦ THUỐC BẮC - 150 NGĂN KÉO (10x15)', canvas.width / 2, 40);
                 
                 // Vẽ chú thích kích thước
                 ctx.font = '16px Arial';
                 ctx.fillStyle = '#5D4037';
                 ctx.textAlign = 'center';
-                ctx.fillText(`Tổng kích thước: ${cabinetWidth/10}cm (rộng) × ${cabinetHeight/10}cm (cao) × ${cabinetDepth/10}cm (sâu)`, canvas.width / 2, canvas.height - 30);
+                ctx.fillText(`Kích thước tủ: ${cabinetWidth/10}cm (rộng) × ${cabinetHeight/10}cm (cao) × ${cabinetDepth/10}cm (sâu)`, canvas.width / 2, canvas.height - 30);
                 
                 // Chú thích ngăn kéo
                 ctx.textAlign = 'right';
@@ -502,7 +533,7 @@
                 // Chiều sâu tủ
                 ctx.beginPath();
                 ctx.moveTo(startX, startY + cabinetHeight + 20);
-                ctx.lineTo(startX + cabinetWidth, startY + cabinetHeight + 20);
+                    ctx.lineTo(startX + cabinetWidth, startY + cabinetHeight + 20);
                 ctx.stroke();
                 
                 ctx.textAlign = 'center';
@@ -656,18 +687,29 @@
             // Xử lý sự kiện nút
             viewFrontBtn.addEventListener('click', function() {
                 currentView = 'front';
+                updateActiveButton(this);
                 drawCabinet();
             });
             
             viewSideBtn.addEventListener('click', function() {
                 currentView = 'side';
+                updateActiveButton(this);
                 drawCabinet();
             });
             
             viewDrawerBtn.addEventListener('click', function() {
                 currentView = 'drawer';
+                updateActiveButton(this);
                 drawCabinet();
             });
+            
+            // Cập nhật nút active
+            function updateActiveButton(activeBtn) {
+                document.querySelectorAll('button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                activeBtn.classList.add('active');
+            }
             
             // Vẽ ban đầu
             drawCabinet();
