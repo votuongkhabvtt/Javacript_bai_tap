@@ -3,84 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thiết kế tủ thuốc bắc - Góc nghiêng 3D</title>
+    <title>Tủ Thuốc Bắc - Mặt Nghiêng Bên Trái</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+            background: #f5f5f5;
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #333;
         }
         
         .header {
             text-align: center;
             margin-bottom: 30px;
             max-width: 1000px;
-            background: rgba(139, 69, 19, 0.1);
-            padding: 25px;
-            border-radius: 15px;
         }
         
         h1 {
             color: #8B4513;
-            margin-bottom: 15px;
-            font-size: 2.2rem;
+            margin-bottom: 10px;
         }
         
         .canvas-container {
             width: 900px;
-            height: 600px;
+            height: 700px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
             position: relative;
-            perspective: 1200px;
-            margin-bottom: 30px;
+            overflow: hidden;
         }
         
-        #cabinet3d {
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transform: rotateX(10deg) rotateY(-25deg);
-            transition: transform 0.5s ease;
-        }
-        
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        button {
-            background: #8B4513;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        button:hover {
-            background: #A0522D;
-            transform: translateY(-3px);
+        canvas {
+            display: block;
         }
         
         .specs {
+            margin-top: 30px;
+            max-width: 900px;
             background: white;
             padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            max-width: 900px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
         
         .spec-item {
             margin-bottom: 15px;
             padding-bottom: 15px;
-            border-bottom: 1px dashed #ddd;
+            border-bottom: 1px solid #eee;
         }
         
         .spec-item h3 {
@@ -91,18 +62,12 @@
 </head>
 <body>
     <div class="header">
-        <h1>THIẾT KẾ TỦ THUỐC BẮC - GÓC NGHIÊNG 3D</h1>
-        <p>Khối A | Khối B | Khối C - Màu gỗ cánh gián</p>
+        <h1>THIẾT KẾ TỦ THUỐC BẮC - MẶT NGHIÊNG BÊN TRÁI</h1>
+        <p>Góc nhìn 3D đầy đủ 3 khối chồng nhau</p>
     </div>
     
     <div class="canvas-container">
-        <canvas id="cabinet3d"></canvas>
-    </div>
-    
-    <div class="controls">
-        <button id="rotateLeft">Xoay Trái</button>
-        <button id="rotateRight">Xoay Phải</button>
-        <button id="resetView">Mặc định</button>
+        <canvas id="cabinet3d" width="900" height="700"></canvas>
     </div>
     
     <div class="specs">
@@ -124,13 +89,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const canvas = document.getElementById('cabinet3d');
             const ctx = canvas.getContext('2d');
-            const rotateLeftBtn = document.getElementById('rotateLeft');
-            const rotateRightBtn = document.getElementById('rotateRight');
-            const resetViewBtn = document.getElementById('resetView');
-            
-            // Thiết lập kích thước canvas
-            canvas.width = 900;
-            canvas.height = 600;
             
             // Kích thước các khối (mm)
             const blockA = { width: 3700, height: 1000, depth: 1000 };
@@ -143,319 +101,349 @@
             const lightWood = '#A0522D';
             const drawerFrontColor = '#7D3C1F';
             const handleColor = '#2C3E50';
+            const dividerColor = '#5D4037';
             
-            // Góc xoay
-            let angleY = -25;
-            let angleX = 10;
+            // Góc nhìn nghiêng 30 độ
+            const angle = Math.PI / 6;
+            
+            // Hàm chuyển đổi tọa độ 3D sang 2D
+            function project(x, y, z) {
+                const projectedX = (x - z * Math.cos(angle)) * 0.2 + 450;
+                const projectedY = 650 - (y + z * Math.sin(angle)) * 0.2;
+                return { x: projectedX, y: projectedY };
+            }
+            
+            // Vẽ khối A
+            function drawBlockA() {
+                const points = [
+                    project(0, 0, 0),
+                    project(blockA.width, 0, 0),
+                    project(blockA.width, blockA.height, 0),
+                    project(0, blockA.height, 0),
+                    project(0, blockA.height, blockA.depth),
+                    project(0, 0, blockA.depth),
+                    project(blockA.width, 0, blockA.depth),
+                    project(blockA.width, blockA.height, blockA.depth)
+                ];
+                
+                // Mặt bên trái
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                ctx.lineTo(points[5].x, points[5].y);
+                ctx.lineTo(points[4].x, points[4].y);
+                ctx.lineTo(points[3].x, points[3].y);
+                ctx.closePath();
+                ctx.fillStyle = '#6B2B0F';
+                ctx.fill();
+                
+                // Mặt trên
+                ctx.beginPath();
+                ctx.moveTo(points[2].x, points[2].y);
+                ctx.lineTo(points[3].x, points[3].y);
+                ctx.lineTo(points[4].x, points[4].y);
+                ctx.lineTo(points[7].x, points[7].y);
+                ctx.closePath();
+                ctx.fillStyle = '#5D4037';
+                ctx.fill();
+                
+                // Mặt trước
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                ctx.lineTo(points[1].x, points[1].y);
+                ctx.lineTo(points[2].x, points[2].y);
+                ctx.lineTo(points[3].x, points[3].y);
+                ctx.closePath();
+                ctx.fillStyle = woodColor;
+                ctx.fill();
+                
+                // Vẽ các ô cửa (9 ô)
+                const cols = 9;
+                const doorWidth = blockA.width / cols;
+                
+                for (let i = 0; i < cols; i++) {
+                    const doorX = i * doorWidth;
+                    
+                    // Vẽ cửa
+                    const doorPoints = [
+                        project(doorX, 0, 0),
+                        project(doorX + doorWidth, 0, 0),
+                        project(doorX + doorWidth, blockA.height, 0),
+                        project(doorX, blockA.height, 0)
+                    ];
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(doorPoints[0].x, doorPoints[0].y);
+                    ctx.lineTo(doorPoints[1].x, doorPoints[1].y);
+                    ctx.lineTo(doorPoints[2].x, doorPoints[2].y);
+                    ctx.lineTo(doorPoints[3].x, doorPoints[3].y);
+                    ctx.closePath();
+                    ctx.fillStyle = '#7D3C1F';
+                    ctx.fill();
+                    ctx.strokeStyle = darkWood;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    
+                    // Vẽ đợt ngang
+                    const shelfY = blockA.height / 2;
+                    const shelfPoints = [
+                        project(doorX + 50, shelfY, 1),
+                        project(doorX + doorWidth - 50, shelfY, 1),
+                        project(doorX + doorWidth - 50, shelfY + 10, 1),
+                        project(doorX + 50, shelfY + 10, 1)
+                    ];
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(shelfPoints[0].x, shelfPoints[0].y);
+                    ctx.lineTo(shelfPoints[1].x, shelfPoints[1].y);
+                    ctx.lineTo(shelfPoints[2].x, shelfPoints[2].y);
+                    ctx.lineTo(shelfPoints[3].x, shelfPoints[3].y);
+                    ctx.closePath();
+                    ctx.fillStyle = dividerColor;
+                    ctx.fill();
+                    
+                    // Vẽ khóa
+                    const handlePos = project(doorX + doorWidth - 100, blockA.height / 2, 1);
+                    ctx.beginPath();
+                    ctx.arc(handlePos.x, handlePos.y, 8, 0, Math.PI * 2);
+                    ctx.fillStyle = handleColor;
+                    ctx.fill();
+                }
+                
+                // Vẽ chân tủ
+                const basePoints = [
+                    project(-50, blockA.height, -50),
+                    project(blockA.width + 50, blockA.height, -50),
+                    project(blockA.width + 50, blockA.height, blockA.depth + 50),
+                    project(-50, blockA.height, blockA.depth + 50)
+                ];
+                
+                ctx.beginPath();
+                ctx.moveTo(basePoints[0].x, basePoints[0].y);
+                ctx.lineTo(basePoints[1].x, basePoints[1].y);
+                ctx.lineTo(basePoints[2].x, basePoints[2].y);
+                ctx.lineTo(basePoints[3].x, basePoints[3].y);
+                ctx.closePath();
+                ctx.fillStyle = darkWood;
+                ctx.fill();
+            }
+            
+            // Vẽ khối B
+            function drawBlockB() {
+                const startY = blockA.height;
+                const points = [
+                    project(50, startY, 50),
+                    project(50 + blockB.width, startY, 50),
+                    project(50 + blockB.width, startY + blockB.height, 50),
+                    project(50, startY + blockB.height, 50),
+                    project(50, startY + blockB.height, 50 + blockB.depth),
+                    project(50, startY, 50 + blockB.depth),
+                    project(50 + blockB.width, startY, 50 + blockB.depth),
+                    project(50 + blockB.width, startY + blockB.height, 50 + blockB.depth)
+                ];
+                
+                // Mặt bên trái
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                ctx.lineTo(points[5].x, points[5].y);
+                ctx.lineTo(points[4].x, points[4].y);
+                ctx.lineTo(points[3].x, points[3].y);
+                ctx.closePath();
+                ctx.fillStyle = '#6B2B0F';
+                ctx.fill();
+                
+                // Mặt trước
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                ctx.lineTo(points[1].x, points[1].y);
+                ctx.lineTo(points[2].x, points[2].y);
+                ctx.lineTo(points[3].x, points[3].y);
+                ctx.closePath();
+                ctx.fillStyle = lightWood;
+                ctx.fill();
+                
+                // Vẽ các ngăn kéo (12 cột x 8 hàng)
+                const cols = 12;
+                const rows = 8;
+                const drawerWidth = blockB.width / cols;
+                const drawerHeight = blockB.height / rows;
+                
+                for (let row = 0; row < rows; row++) {
+                    for (let col = 0; col < cols; col++) {
+                        const drawerX = 50 + col * drawerWidth;
+                        const drawerY = startY + row * drawerHeight;
+                        
+                        // Vẽ mặt trước ngăn kéo
+                        const drawerPoints = [
+                            project(drawerX, drawerY, 50),
+                            project(drawerX + drawerWidth, drawerY, 50),
+                            project(drawerX + drawerWidth, drawerY + drawerHeight, 50),
+                            project(drawerX, drawerY + drawerHeight, 50)
+                        ];
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(drawerPoints[0].x, drawerPoints[0].y);
+                        ctx.lineTo(drawerPoints[1].x, drawerPoints[1].y);
+                        ctx.lineTo(drawerPoints[2].x, drawerPoints[2].y);
+                        ctx.lineTo(drawerPoints[3].x, drawerPoints[3].y);
+                        ctx.closePath();
+                        ctx.fillStyle = drawerFrontColor;
+                        ctx.fill();
+                        ctx.strokeStyle = darkWood;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                        
+                        // Vẽ vách ngăn dọc
+                        const dividerPoints = [
+                            project(drawerX + drawerWidth / 2 - 5, drawerY, 51),
+                            project(drawerX + drawerWidth / 2 + 5, drawerY, 51),
+                            project(drawerX + drawerWidth / 2 + 5, drawerY + drawerHeight, 51),
+                            project(drawerX + drawerWidth / 2 - 5, drawerY + drawerHeight, 51)
+                        ];
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(dividerPoints[0].x, dividerPoints[0].y);
+                        ctx.lineTo(dividerPoints[1].x, dividerPoints[1].y);
+                        ctx.lineTo(dividerPoints[2].x, dividerPoints[2].y);
+                        ctx.lineTo(dividerPoints[3].x, dividerPoints[3].y);
+                        ctx.closePath();
+                        ctx.fillStyle = dividerColor;
+                        ctx.fill();
+                        
+                        // Vẽ tay nắm (2 tay nắm)
+                        const handle1Pos = project(drawerX + drawerWidth / 4, drawerY + drawerHeight / 2, 51);
+                        const handle2Pos = project(drawerX + drawerWidth * 3/4, drawerY + drawerHeight / 2, 51);
+                        
+                        ctx.beginPath();
+                        ctx.arc(handle1Pos.x, handle1Pos.y, 5, 0, Math.PI * 2);
+                        ctx.fillStyle = handleColor;
+                        ctx.fill();
+                        
+                        ctx.beginPath();
+                        ctx.arc(handle2Pos.x, handle2Pos.y, 5, 0, Math.PI * 2);
+                        ctx.fillStyle = handleColor;
+                        ctx.fill();
+                    }
+                }
+            }
+            
+            // Vẽ khối C
+            function drawBlockC() {
+                const startY = blockA.height + blockB.height;
+                const points = [
+                    project(0, startY, 0),
+                    project(blockC.width, startY, 0),
+                    project(blockC.width, startY + blockC.height, 0),
+                    project(0, startY + blockC.height, 0),
+                    project(0, startY + blockC.height, blockC.depth),
+                    project(0, startY, blockC.depth),
+                    project(blockC.width, startY, blockC.depth),
+                    project(blockC.width, startY + blockC.height, blockC.depth)
+                ];
+                
+                // Mặt bên trái
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                ctx.lineTo(points[5].x, points[5].y);
+                ctx.lineTo(points[4].x, points[4].y);
+                ctx.lineTo(points[3].x, points[3].y);
+                ctx.closePath();
+                ctx.fillStyle = '#6B2B0F';
+                ctx.fill();
+                
+                // Mặt trước
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                ctx.lineTo(points[1].x, points[1].y);
+                ctx.lineTo(points[2].x, points[2].y);
+                ctx.lineTo(points[3].x, points[3].y);
+                ctx.closePath();
+                ctx.fillStyle = woodColor;
+                ctx.fill();
+                
+                // Vẽ các ô cửa (9 ô)
+                const cols = 9;
+                const doorWidth = blockC.width / cols;
+                
+                for (let i = 0; i < cols; i++) {
+                    const doorX = i * doorWidth;
+                    
+                    // Vẽ cửa
+                    const doorPoints = [
+                        project(doorX, startY, 0),
+                        project(doorX + doorWidth, startY, 0),
+                        project(doorX + doorWidth, startY + blockC.height, 0),
+                        project(doorX, startY + blockC.height, 0)
+                    ];
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(doorPoints[0].x, doorPoints[0].y);
+                    ctx.lineTo(doorPoints[1].x, doorPoints[1].y);
+                    ctx.lineTo(doorPoints[2].x, doorPoints[2].y);
+                    ctx.lineTo(doorPoints[3].x, doorPoints[3].y);
+                    ctx.closePath();
+                    ctx.fillStyle = '#7D3C1F';
+                    ctx.fill();
+                    ctx.strokeStyle = darkWood;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    
+                    // Vẽ đợt ngang
+                    const shelfY = startY + blockC.height / 2;
+                    const shelfPoints = [
+                        project(doorX + 50, shelfY, 1),
+                        project(doorX + doorWidth - 50, shelfY, 1),
+                        project(doorX + doorWidth - 50, shelfY + 10, 1),
+                        project(doorX + 50, shelfY + 10, 1)
+                    ];
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(shelfPoints[0].x, shelfPoints[0].y);
+                    ctx.lineTo(shelfPoints[1].x, shelfPoints[1].y);
+                    ctx.lineTo(shelfPoints[2].x, shelfPoints[2].y);
+                    ctx.lineTo(shelfPoints[3].x, shelfPoints[3].y);
+                    ctx.closePath();
+                    ctx.fillStyle = dividerColor;
+                    ctx.fill();
+                    
+                    // Vẽ bản lề
+                    const hingePos = project(doorX + 30, shelfY, 1);
+                    ctx.beginPath();
+                    ctx.arc(hingePos.x, hingePos.y, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#777';
+                    ctx.fill();
+                }
+            }
             
             // Vẽ tủ
             function drawCabinet() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Tâm của canvas
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
+                // Vẽ nền
+                ctx.fillStyle = '#f5f5f5';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // Hàm chuyển đổi tọa độ 3D sang 2D
-                function project(x, y, z) {
-                    // Chuyển đổi tọa độ để tâm tủ ở giữa canvas
-                    x = x - blockA.width / 2;
-                    y = y - (blockA.height + blockB.height + blockC.height) / 2;
-                    z = z - blockA.depth / 2;
-                    
-                    // Áp dụng phép quay
-                    const radY = angleY * Math.PI / 180;
-                    const radX = angleX * Math.PI / 180;
-                    
-                    // Quay quanh trục Y
-                    let rotatedX = x * Math.cos(radY) + z * Math.sin(radY);
-                    let rotatedZ = -x * Math.sin(radY) + z * Math.cos(radY);
-                    
-                    // Quay quanh trục X
-                    const rotatedY = y * Math.cos(radX) - rotatedZ * Math.sin(radX);
-                    rotatedZ = y * Math.sin(radX) + rotatedZ * Math.cos(radX);
-                    
-                    // Phối cảnh
-                    const scale = 1000 / (1000 + rotatedZ);
-                    const projectedX = rotatedX * scale + centerX;
-                    const projectedY = rotatedY * scale + centerY;
-                    
-                    return { x: projectedX, y: projectedY, scale: scale };
-                }
+                // Vẽ các khối
+                drawBlockA();
+                drawBlockB();
+                drawBlockC();
                 
-                // Vẽ khối A (dưới cùng)
-                drawBlock(0, 0, 0, blockA.width, blockA.height, blockA.depth, woodColor, true);
-                
-                // Vẽ khối B (giữa)
-                const blockBY = blockA.height;
-                drawBlock(50, blockBY, 50, blockB.width, blockB.height, blockB.depth, lightWood, false);
-                
-                // Vẽ khối C (trên cùng)
-                const blockCY = blockBY + blockB.height;
-                drawBlock(0, blockCY, 0, blockC.width, blockC.height, blockC.depth, woodColor, false);
-                
-                // Hàm vẽ một khối
-                function drawBlock(x, y, z, width, height, depth, color, isBase) {
-                    // Các điểm của khối
-                    const points = [
-                        {x: x, y: y, z: z},
-                        {x: x + width, y: y, z: z},
-                        {x: x + width, y: y + height, z: z},
-                        {x: x, y: y + height, z: z},
-                        {x: x, y: y + height, z: z + depth},
-                        {x: x, y: y, z: z + depth},
-                        {x: x + width, y: y, z: z + depth},
-                        {x: x + width, y: y + height, z: z + depth}
-                    ];
-                    
-                    // Chuyển đổi sang 2D
-                    const projected = points.map(p => project(p.x, p.y, p.z));
-                    
-                    // Vẽ mặt trước
-                    ctx.beginPath();
-                    ctx.moveTo(projected[0].x, projected[0].y);
-                    ctx.lineTo(projected[1].x, projected[1].y);
-                    ctx.lineTo(projected[2].x, projected[2].y);
-                    ctx.lineTo(projected[3].x, projected[3].y);
-                    ctx.closePath();
-                    ctx.fillStyle = color;
-                    ctx.fill();
-                    ctx.strokeStyle = darkWood;
-                    ctx.lineWidth = 2 * projected[0].scale;
-                    ctx.stroke();
-                    
-                    // Vẽ mặt bên
-                    ctx.beginPath();
-                    ctx.moveTo(projected[0].x, projected[0].y);
-                    ctx.lineTo(projected[5].x, projected[5].y);
-                    ctx.lineTo(projected[4].x, projected[4].y);
-                    ctx.lineTo(projected[3].x, projected[3].y);
-                    ctx.closePath();
-                    ctx.fillStyle = shadeColor(color, -20);
-                    ctx.fill();
-                    ctx.strokeStyle = darkWood;
-                    ctx.stroke();
-                    
-                    // Vẽ mặt trên
-                    ctx.beginPath();
-                    ctx.moveTo(projected[2].x, projected[2].y);
-                    ctx.lineTo(projected[3].x, projected[3].y);
-                    ctx.lineTo(projected[4].x, projected[4].y);
-                    ctx.lineTo(projected[7].x, projected[7].y);
-                    ctx.closePath();
-                    ctx.fillStyle = shadeColor(color, 10);
-                    ctx.fill();
-                    ctx.strokeStyle = darkWood;
-                    ctx.stroke();
-                    
-                    // Nếu là khối A thì vẽ chân tủ
-                    if (isBase) {
-                        const basePoints = [
-                            {x: x - 50, y: y + height, z: z - 50},
-                            {x: x + width + 50, y: y + height, z: z - 50},
-                            {x: x + width + 50, y: y + height, z: z + depth + 50},
-                            {x: x - 50, y: y + height, z: z + depth + 50}
-                        ];
-                        
-                        const projectedBase = basePoints.map(p => project(p.x, p.y, p.z));
-                        
-                        ctx.beginPath();
-                        ctx.moveTo(projectedBase[0].x, projectedBase[0].y);
-                        ctx.lineTo(projectedBase[1].x, projectedBase[1].y);
-                        ctx.lineTo(projectedBase[2].x, projectedBase[2].y);
-                        ctx.lineTo(projectedBase[3].x, projectedBase[3].y);
-                        ctx.closePath();
-                        ctx.fillStyle = darkWood;
-                        ctx.fill();
-                    }
-                    
-                    // Vẽ chi tiết các ô cửa/ngăn kéo
-                    if (isBase || (y === blockCY)) {
-                        // Vẽ ô cửa cho khối A và C
-                        const isBlockA = isBase;
-                        const compartmentHeight = isBlockA ? 980 : 500;
-                        const compartmentWidth = 400;
-                        const cols = Math.floor(width / compartmentWidth);
-                        
-                        for (let i = 0; i < cols; i++) {
-                            const doorX = x + i * compartmentWidth;
-                            const doorZ = z + (isBlockA ? 0 : 10);
-                            
-                            // Vẽ mặt trước cửa
-                            const doorFront = [
-                                {x: doorX, y: y, z: doorZ},
-                                {x: doorX + compartmentWidth, y: y, z: doorZ},
-                                {x: doorX + compartmentWidth, y: y + compartmentHeight, z: doorZ},
-                                {x: doorX, y: y + compartmentHeight, z: doorZ}
-                            ];
-                            
-                            const projectedDoor = doorFront.map(p => project(p.x, p.y, p.z));
-                            
-                            ctx.beginPath();
-                            ctx.moveTo(projectedDoor[0].x, projectedDoor[0].y);
-                            ctx.lineTo(projectedDoor[1].x, projectedDoor[1].y);
-                            ctx.lineTo(projectedDoor[2].x, projectedDoor[2].y);
-                            ctx.lineTo(projectedDoor[3].x, projectedDoor[3].y);
-                            ctx.closePath();
-                            ctx.fillStyle = shadeColor(color, isBlockA ? -10 : -5);
-                            ctx.fill();
-                            ctx.strokeStyle = darkWood;
-                            ctx.lineWidth = 2 * projectedDoor[0].scale;
-                            ctx.stroke();
-                            
-                            // Vẽ đợt ngang
-                            const shelfY = y + compartmentHeight / 2;
-                            const shelfPoints = [
-                                {x: doorX + 10, y: shelfY, z: doorZ + 1},
-                                {x: doorX + compartmentWidth - 10, y: shelfY, z: doorZ + 1},
-                                {x: doorX + compartmentWidth - 10, y: shelfY + 10, z: doorZ + 1},
-                                {x: doorX + 10, y: shelfY + 10, z: doorZ + 1}
-                            ];
-                            
-                            const projectedShelf = shelfPoints.map(p => project(p.x, p.y, p.z));
-                            
-                            ctx.beginPath();
-                            ctx.moveTo(projectedShelf[0].x, projectedShelf[0].y);
-                            ctx.lineTo(projectedShelf[1].x, projectedShelf[1].y);
-                            ctx.lineTo(projectedShelf[2].x, projectedShelf[2].y);
-                            ctx.lineTo(projectedShelf[3].x, projectedShelf[3].y);
-                            ctx.closePath();
-                            ctx.fillStyle = dividerColor;
-                            ctx.fill();
-                            
-                            // Vẽ khóa/bản lề
-                            const handleX = isBlockA ? doorX + compartmentWidth - 30 : doorX + 20;
-                            const handleY = y + compartmentHeight / 2;
-                            const handleZ = doorZ + 1;
-                            const handlePos = project(handleX, handleY, handleZ);
-                            
-                            ctx.beginPath();
-                            ctx.arc(handlePos.x, handlePos.y, 8 * handlePos.scale, 0, Math.PI * 2);
-                            ctx.fillStyle = isBlockA ? handleColor : '#777';
-                            ctx.fill();
-                        }
-                    } else {
-                        // Vẽ ngăn kéo cho khối B
-                        const cols = 12;
-                        const rows = 8;
-                        const drawerWidth = width / cols;
-                        const drawerHeight = height / rows;
-                        
-                        for (let row = 0; row < rows; row++) {
-                            for (let col = 0; col < cols; col++) {
-                                const drawerX = x + col * drawerWidth;
-                                const drawerY = y + row * drawerHeight;
-                                const drawerZ = z + 5;
-                                
-                                // Vẽ mặt trước ngăn kéo
-                                const drawerFront = [
-                                    {x: drawerX, y: drawerY, z: drawerZ},
-                                    {x: drawerX + drawerWidth, y: drawerY, z: drawerZ},
-                                    {x: drawerX + drawerWidth, y: drawerY + drawerHeight, z: drawerZ},
-                                    {x: drawerX, y: drawerY + drawerHeight, z: drawerZ}
-                                ];
-                                
-                                const projectedDrawer = drawerFront.map(p => project(p.x, p.y, p.z));
-                                
-                                ctx.beginPath();
-                                ctx.moveTo(projectedDrawer[0].x, projectedDrawer[0].y);
-                                ctx.lineTo(projectedDrawer[1].x, projectedDrawer[1].y);
-                                ctx.lineTo(projectedDrawer[2].x, projectedDrawer[2].y);
-                                ctx.lineTo(projectedDrawer[3].x, projectedDrawer[3].y);
-                                ctx.closePath();
-                                ctx.fillStyle = drawerFrontColor;
-                                ctx.fill();
-                                ctx.strokeStyle = darkWood;
-                                ctx.lineWidth = 1 * projectedDrawer[0].scale;
-                                ctx.stroke();
-                                
-                                // Vẽ vách ngăn dọc
-                                const dividerPoints = [
-                                    {x: drawerX + drawerWidth / 2 - 5, y: drawerY, z: drawerZ + 1},
-                                    {x: drawerX + drawerWidth / 2 + 5, y: drawerY, z: drawerZ + 1},
-                                    {x: drawerX + drawerWidth / 2 + 5, y: drawerY + drawerHeight, z: drawerZ + 1},
-                                    {x: drawerX + drawerWidth / 2 - 5, y: drawerY + drawerHeight, z: drawerZ + 1}
-                                ];
-                                
-                                const projectedDivider = dividerPoints.map(p => project(p.x, p.y, p.z));
-                                
-                                ctx.beginPath();
-                                ctx.moveTo(projectedDivider[0].x, projectedDivider[0].y);
-                                ctx.lineTo(projectedDivider[1].x, projectedDivider[1].y);
-                                ctx.lineTo(projectedDivider[2].x, projectedDivider[2].y);
-                                ctx.lineTo(projectedDivider[3].x, projectedDivider[3].y);
-                                ctx.closePath();
-                                ctx.fillStyle = dividerColor;
-                                ctx.fill();
-                                
-                                // Vẽ tay nắm (2 tay nắm)
-                                const handle1Pos = project(drawerX + drawerWidth / 4, drawerY + drawerHeight / 2, drawerZ + 1);
-                                const handle2Pos = project(drawerX + drawerWidth * 3/4, drawerY + drawerHeight / 2, drawerZ + 1);
-                                
-                                ctx.beginPath();
-                                ctx.arc(handle1Pos.x, handle1Pos.y, 5 * handle1Pos.scale, 0, Math.PI * 2);
-                                ctx.fillStyle = handleColor;
-                                ctx.fill();
-                                
-                                ctx.beginPath();
-                                ctx.arc(handle2Pos.x, handle2Pos.y, 5 * handle2Pos.scale, 0, Math.PI * 2);
-                                ctx.fillStyle = handleColor;
-                                ctx.fill();
-                            }
-                        }
-                    }
-                }
-                
-                // Hiệu ứng ánh sáng
-                const lightPos = { x: centerX - 200, y: centerY - 200 };
+                // Vẽ hiệu ứng ánh sáng
                 const gradient = ctx.createRadialGradient(
-                    lightPos.x, lightPos.y, 50,
-                    lightPos.x, lightPos.y, 600
+                    300, 200, 50,
+                    300, 200, 600
                 );
-                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.2)');
                 gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
                 
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Vẽ tiêu đề
+                ctx.font = 'bold 24px Arial';
+                ctx.fillStyle = '#5D4037';
+                ctx.textAlign = 'center';
+                ctx.fillText('MẶT NGHIÊNG BÊN TRÁI - TỦ THUỐC BẮC 3 KHỐI', canvas.width / 2, 40);
             }
-            
-            // Hàm điều chỉnh độ sáng màu
-            function shadeColor(color, percent) {
-                let R = parseInt(color.substring(1,3), 16);
-                let G = parseInt(color.substring(3,5), 16);
-                let B = parseInt(color.substring(5,7), 16);
-
-                R = parseInt(R * (100 + percent) / 100);
-                G = parseInt(G * (100 + percent) / 100);
-                B = parseInt(B * (100 + percent) / 100);
-
-                R = (R<255)?R:255;  
-                G = (G<255)?G:255;  
-                B = (B<255)?B:255;  
-
-                const RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
-                const GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
-                const BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
-
-                return "#"+RR+GG+BB;
-            }
-            
-            // Xử lý sự kiện nút
-            rotateLeftBtn.addEventListener('click', function() {
-                angleY -= 15;
-                drawCabinet();
-            });
-            
-            rotateRightBtn.addEventListener('click', function() {
-                angleY += 15;
-                drawCabinet();
-            });
-            
-            resetViewBtn.addEventListener('click', function() {
-                angleY = -25;
-                angleX = 10;
-                drawCabinet();
-            });
             
             // Vẽ ban đầu
             drawCabinet();
