@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Website</title>
+    <title>Thiết kế Web với Bootstrap</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom styles */
         :root {
             --primary-color: #0d6efd;
+            --primary-dark: #0b5ed7;
             --dark-color: #212529;
             --light-color: #f8f9fa;
             --gray-color: #6c757d;
@@ -20,6 +20,8 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
         }
         
         /* Header styles */
@@ -31,176 +33,238 @@
         
         .navbar-brand {
             font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--dark-color);
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
         }
         
         .nav-link {
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             color: var(--gray-color);
-            margin: 0 8px;
+            margin: 0 10px;
             transition: all 0.3s;
+            position: relative;
         }
         
         .nav-link:hover {
             color: var(--primary-color);
         }
         
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
         .contact-btn {
             background-color: var(--primary-color);
             color: white;
             font-weight: 500;
-            padding: 8px 20px;
-            border-radius: 5px;
+            padding: 10px 25px;
+            border-radius: 8px;
             transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
         
         .contact-btn:hover {
-            background-color: #0b5ed7;
+            background-color: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
         }
         
         /* Hero section */
         .hero-section {
-            background-color: var(--light-gray);
             padding: 100px 0;
-            text-align: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+        }
+        
+        .hero-content {
+            padding-right: 40px;
         }
         
         .hero-title {
-            font-weight: 700;
-            font-size: 3rem;
+            font-weight: 800;
+            font-size: 3.5rem;
             color: var(--dark-color);
             margin-bottom: 25px;
             line-height: 1.2;
         }
         
+        .hero-title span {
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background-color: rgba(13, 110, 253, 0.2);
+            z-index: -1;
+        }
+        
         .hero-subtitle {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             color: var(--gray-color);
+            margin-bottom: 40px;
             max-width: 600px;
-            margin: 0 auto 40px;
         }
         
         .start-btn {
             background-color: var(--primary-color);
             color: white;
             font-weight: 600;
-            padding: 12px 35px;
-            font-size: 1.1rem;
+            padding: 14px 40px;
+            font-size: 1.15rem;
             border-radius: 8px;
             transition: all 0.3s;
             border: none;
             box-shadow: 0 4px 6px rgba(13, 110, 253, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .start-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.6s;
+        }
+        
+        .start-btn:hover::after {
+            left: 120%;
         }
         
         .start-btn:hover {
-            background-color: #0b5ed7;
+            background-color: var(--primary-dark);
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(13, 110, 253, 0.4);
         }
         
-        /* Features section */
-        .features-section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 50px;
-            text-align: center;
-        }
-        
-        .feature-card {
-            border: none;
-            border-radius: 10px;
+        .image-container {
+            position: relative;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             height: 100%;
+            transition: transform 0.4s ease;
         }
         
-        .feature-card:hover {
+        .image-container:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(33, 37, 41, 0.05) 100%);
+            z-index: 1;
         }
         
-        .feature-title {
-            font-weight: 600;
-            color: var(--dark-color);
-            margin-bottom: 15px;
-        }
-        
-        .feature-text {
-            color: var(--gray-color);
-        }
-        
-        /* Footer */
-        .footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 60px 0 30px;
-        }
-        
-        .footer-title {
-            font-weight: 600;
-            margin-bottom: 25px;
-            font-size: 1.25rem;
-        }
-        
-        .footer-links a {
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            color: #adb5bd;
-            text-decoration: none;
-            margin-bottom: 10px;
-            transition: all 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .copyright {
-            border-top: 1px solid #495057;
-            padding-top: 20px;
-            margin-top: 50px;
-            text-align: center;
-            color: #adb5bd;
         }
         
         /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 50px;
+            }
+            
+            .image-container {
+                height: 400px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2.2rem;
+                font-size: 2.3rem;
             }
             
             .hero-subtitle {
-                font-size: 1.1rem;
+                font-size: 1.15rem;
             }
+            
+            .nav-link {
+                font-size: 1rem;
+                margin: 0 8px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animated {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand" href="#">Bootstrap</a>
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-rocket me-2"></i>Bootstrap
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Case</a></li>
@@ -208,7 +272,9 @@
                         <li class="nav-item"><a class="nav-link" href="#">How it works</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Hire</a></li>
                     </ul>
-                    <a href="#" class="contact-btn">Contact us</a>
+                    <div class="ms-lg-3 mt-3 mt-lg-0">
+                        <a href="#" class="contact-btn">Contact us</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -217,98 +283,44 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <h1 class="hero-title">Great Product is built by great teams</h1>
-            <p class="hero-subtitle">Start aligned text on all viewport sizes.</p>
-            <button class="start-btn">Lets go started</button>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <h2 class="section-title">Our Services</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card feature-card">
-                        <div class="card-body p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <h3 class="feature-title">Web Development</h3>
-                            <p class="feature-text">We create responsive and modern websites using the latest technologies to ensure optimal performance.</p>
-                        </div>
+            <div class="row align-items-center">
+                <!-- Left Column - Text Content -->
+                <div class="col-lg-6 col-md-12 mb-5 mb-lg-0">
+                    <div class="hero-content animated">
+                        <h1 class="hero-title">Great Product is built by <span>great teams</span></h1>
+                        <p class="hero-subtitle animated delay-1">Start aligned text on all viewport sizes. Build amazing products with our talented team of designers and developers.</p>
+                        <button class="start-btn animated delay-2">Lets go started</button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card feature-card">
-                        <div class="card-body p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <h3 class="feature-title">Mobile Apps</h3>
-                            <p class="feature-text">Native and cross-platform mobile application development for iOS and Android platforms.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card feature-card">
-                        <div class="card-body p-4">
-                            <div class="feature-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <h3 class="feature-title">Digital Marketing</h3>
-                            <p class="feature-text">Comprehensive digital marketing strategies to grow your online presence and reach your target audience.</p>
-                        </div>
+                
+                <!-- Right Column - Image -->
+                <div class="col-lg-6 col-md-12 animated delay-3">
+                    <div class="image-container">
+                        <!-- Placeholder for the image from the link -->
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80" alt="Team collaboration" class="img-fluid">
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <h4 class="footer-title">Bootstrap</h4>
-                    <p>We create digital experiences that help brands grow and connect with their audiences.</p>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h4 class="footer-title">Company</h4>
-                    <div class="footer-links">
-                        <a href="#">About us</a>
-                        <a href="#">Services</a>
-                        <a href="#">Case Studies</a>
-                        <a href="#">Blog</a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-4 mb-4">
-                    <h4 class="footer-title">Support</h4>
-                    <div class="footer-links">
-                        <a href="#">Help Center</a>
-                        <a href="#">FAQ</a>
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 mb-4">
-                    <h4 class="footer-title">Contact Us</h4>
-                    <p><i class="fas fa-envelope me-2"></i> info@example.com</p>
-                    <p><i class="fas fa-phone me-2"></i> +1 (123) 456-7890</p>
-                    <p><i class="fas fa-map-marker-alt me-2"></i> New York, NY 10001, USA</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="copyright">
-                        &copy; 2023 Bootstrap. All rights reserved.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple animation trigger
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animated');
+            
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+            });
+            
+            setTimeout(() => {
+                animatedElements.forEach(element => {
+                    element.style.opacity = '1';
+                });
+            }, 100);
+        });
+    </script>
 </body>
 </html>
