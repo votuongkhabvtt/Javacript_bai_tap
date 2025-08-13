@@ -22,6 +22,10 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--dark-color);
             background-color: #f5f7fa;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Header styles */
@@ -29,6 +33,7 @@
             background-color: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 15px 0;
+            z-index: 1000;
         }
         
         .navbar-brand {
@@ -84,14 +89,37 @@
             box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
         }
         
-        /* Hero section */
-        .hero-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+        /* Main content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 50px 0;
         }
         
-        .hero-content {
-            padding-right: 40px;
+        .content-wrapper {
+            display: flex;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .text-column {
+            flex: 0 0 50%;
+            padding: 0 5%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .image-column {
+            flex: 0 0 50%;
+            height: 100%;
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 50%;
+            overflow: hidden;
         }
         
         .hero-title {
@@ -137,6 +165,7 @@
             box-shadow: 0 4px 6px rgba(13, 110, 253, 0.3);
             position: relative;
             overflow: hidden;
+            width: fit-content;
         }
         
         .start-btn::after {
@@ -162,20 +191,17 @@
         }
         
         .image-container {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            transition: transform 0.4s ease;
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80') center center;
+            background-size: cover;
+            transition: transform 0.5s ease;
         }
         
-        .image-container:hover {
-            transform: translateY(-10px);
-        }
-        
-        .image-container::before {
-            content: '';
+        .image-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -185,26 +211,26 @@
             z-index: 1;
         }
         
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
         /* Responsive adjustments */
         @media (max-width: 992px) {
             .hero-title {
                 font-size: 2.8rem;
             }
             
-            .hero-content {
-                padding-right: 0;
-                margin-bottom: 50px;
+            .image-column {
+                position: relative;
+                width: 100%;
+                height: 60vh;
+                flex: 0 0 100%;
             }
             
-            .image-container {
-                height: 400px;
+            .text-column {
+                flex: 0 0 100%;
+                padding: 40px 5%;
+            }
+            
+            .content-wrapper {
+                flex-direction: column;
             }
         }
         
@@ -220,6 +246,10 @@
             .nav-link {
                 font-size: 1rem;
                 margin: 0 8px;
+            }
+            
+            .image-column {
+                height: 50vh;
             }
         }
         
@@ -245,10 +275,6 @@
         
         .delay-2 {
             animation-delay: 0.4s;
-        }
-        
-        .delay-3 {
-            animation-delay: 0.6s;
         }
     </style>
 </head>
@@ -280,29 +306,25 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Left Column - Text Content -->
-                <div class="col-lg-6 col-md-12 mb-5 mb-lg-0">
-                    <div class="hero-content animated">
-                        <h1 class="hero-title">Great Product is built by <span>great teams</span></h1>
-                        <p class="hero-subtitle animated delay-1">Start aligned text on all viewport sizes. Build amazing products with our talented team of designers and developers.</p>
-                        <button class="start-btn animated delay-2">Lets go started</button>
-                    </div>
-                </div>
-                
-                <!-- Right Column - Image -->
-                <div class="col-lg-6 col-md-12 animated delay-3">
-                    <div class="image-container">
-                        <!-- Placeholder for the image from the link -->
-                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80" alt="Team collaboration" class="img-fluid">
-                    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Left Column - Text Content -->
+            <div class="text-column">
+                <div class="hero-content animated">
+                    <h1 class="hero-title">Great Product is built by <span>great teams</span></h1>
+                    <p class="hero-subtitle animated delay-1">Start aligned text on all viewport sizes. Build amazing products with our talented team of designers and developers. Our approach combines creativity with technical excellence to deliver solutions that exceed expectations.</p>
+                    <button class="start-btn animated delay-2">Lets go started</button>
                 </div>
             </div>
+            
+            <!-- Right Column - Fixed Image -->
+            <div class="image-column">
+                <div class="image-container"></div>
+                <div class="image-overlay"></div>
+            </div>
         </div>
-    </section>
+    </main>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -320,6 +342,13 @@
                     element.style.opacity = '1';
                 });
             }, 100);
+            
+            // Parallax effect for the image
+            window.addEventListener('scroll', function() {
+                const imageContainer = document.querySelector('.image-container');
+                const scrollPosition = window.pageYOffset;
+                imageContainer.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+            });
         });
     </script>
 </body>
