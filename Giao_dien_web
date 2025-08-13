@@ -3,314 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Website</title>
+    <title>Design School - Đăng nhập</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --accent-color: #ff6b00;
-            --light-bg: #f8f9fa;
-            --dark-text: #212529;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--dark-text);
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
         
-        .navbar {
-            padding: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
         }
         
-        .navbar-nav .nav-link {
-            font-weight: 500;
-            color: var(--dark-text);
-            margin: 0 8px;
-            transition: all 0.3s;
+        .login-header {
+            background: #f8f9fa;
+            padding: 40px 30px 30px;
+            text-align: center;
+            border-bottom: 1px solid #eaeaea;
         }
         
-        .navbar-nav .nav-link:hover {
-            color: var(--primary-color);
+        .welcome-text {
+            font-size: 1.1rem;
+            color: #6c757d;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
         
-        .contact-btn {
-            background-color: var(--primary-color);
-            color: white !important;
-            border-radius: 50px;
-            padding: 8px 20px !important;
-            transition: all 0.3s;
-        }
-        
-        .contact-btn:hover {
-            background-color: #0b5ed7;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .hero-section {
-            background-color: var(--light-bg);
-            padding: 100px 0;
-        }
-        
-        .hero-content h1 {
+        .school-name {
+            font-size: 2.5rem;
             font-weight: 800;
-            font-size: 3.5rem;
-            line-height: 1.2;
+            color: #212529;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border: 2px solid #eaeaea;
+            background: white;
+        }
+        
+        .btn-social i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .btn-google {
+            color: #4285F4;
+        }
+        
+        .btn-google:hover {
+            background: #f8f9fa;
+            border-color: #d4d4d4;
+        }
+        
+        .btn-facebook {
+            color: #4267B2;
+        }
+        
+        .btn-facebook:hover {
+            background: #f8f9fa;
+            border-color: #d4d4d4;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #eaeaea;
+        }
+        
+        .divider-text {
+            padding: 0 15px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .login-form {
+            padding: 0 30px 40px;
+        }
+        
+        .form-group {
             margin-bottom: 25px;
         }
         
-        .hero-content p {
-            font-size: 1.2rem;
-            color: var(--secondary-color);
-            margin-bottom: 35px;
-            max-width: 500px;
-        }
-        
-        .cta-btn {
-            background-color: var(--accent-color);
-            color: white;
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
             font-weight: 600;
-            font-size: 1.1rem;
-            padding: 12px 30px;
-            border-radius: 50px;
+            color: #495057;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eaeaea;
+            border-radius: 10px;
+            font-size: 1rem;
             transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #2575fc;
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.15);
+            outline: none;
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-check-input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+            accent-color: #2575fc;
+        }
+        
+        .form-check-label {
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .forgot-password {
+            font-size: 0.9rem;
+            color: #2575fc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #212529;
+            color: white;
             border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 25px;
         }
         
-        .cta-btn:hover {
-            background-color: #e55e00;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255,107,0,0.3);
+        .login-btn:hover {
+            background: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .hero-image {
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            overflow: hidden;
-            transition: transform 0.5s;
-        }
-        
-        .hero-image:hover {
-            transform: scale(1.02);
-        }
-        
-        .features-section {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
+        .signup-link {
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-            height: 100%;
+            font-size: 0.95rem;
+            color: #6c757d;
         }
         
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        .signup-link a {
+            color: #2575fc;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
         }
         
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
+        .signup-link a:hover {
+            text-decoration: underline;
         }
         
-        .feature-card h3 {
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        footer {
-            background-color: var(--dark-text);
-            color: white;
-            padding: 60px 0 30px;
-        }
-        
-        .social-links a {
-            color: white;
-            font-size: 1.2rem;
-            margin-right: 15px;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            color: var(--primary-color);
-            transform: translateY(-3px);
-        }
-        
-        @media (max-width: 992px) {
-            .hero-content h1 {
-                font-size: 2.8rem;
+        @media (max-width: 576px) {
+            .login-header {
+                padding: 30px 20px 20px;
             }
             
-            .navbar-nav .nav-link {
-                margin: 5px 0;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .hero-section {
-                padding: 60px 0;
+            .login-form {
+                padding: 0 20px 30px;
             }
             
-            .hero-content h1 {
-                font-size: 2.3rem;
-            }
-            
-            .hero-content p {
-                font-size: 1.1rem;
+            .school-name {
+                font-size: 2.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header/Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold fs-3" href="#" style="color: var(--primary-color);">Bootstrap</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Case</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Blogs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">How it works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Hire</a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="nav-link contact-btn" href="#">Contact us</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-5 mb-lg-0">
-                    <div class="hero-content">
-                        <h1>Great Product is built by great teams</h1>
-                        <p>Start aligned text on all viewport sizes. Build amazing products with our talented team of designers and developers.</p>
-                        <button class="cta-btn">Lets go started <i class="fas fa-arrow-right ms-2"></i></button>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <img src="https://drive.google.com/uc?export=view&id=1FwXDg634epw92dv-Iq5lCs54FC8JN-H8" alt="Team Collaboration" class="img-fluid hero-image">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <div class="row text-center mb-5">
-                <div class="col-lg-8 mx-auto">
-                    <h2 class="display-5 fw-bold mb-3">Our Core Services</h2>
-                    <p class="lead">We provide a wide range of services to help your business grow and succeed in the digital world.</p>
-                </div>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="welcome-text">Welcome to</div>
+            <div class="school-name">Design School</div>
+            
+            <div class="social-login">
+                <button class="btn-social btn-google">
+                    <i class="fab fa-google"></i>
+                    Login with Google
+                </button>
+                <button class="btn-social btn-facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    Login with Facebook
+                </button>
             </div>
             
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-laptop-code"></i>
-                        </div>
-                        <h3>Web Development</h3>
-                        <p>Professional website development with the latest technologies and frameworks.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3>Mobile Apps</h3>
-                        <p>Native and cross-platform mobile applications for iOS and Android.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3>Digital Marketing</h3>
-                        <p>Strategies to grow your online presence and reach your target audience.</p>
-                    </div>
-                </div>
+            <div class="divider">
+                <div class="divider-line"></div>
+                <div class="divider-text">or</div>
+                <div class="divider-line"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 mb-4 mb-lg-0">
-                    <h3 class="mb-4">Bootstrap</h3>
-                    <p class="mb-4">Creating amazing digital experiences for businesses around the world. We help brands stand out in the digital landscape.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="mb-4">Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">About us</a></li>
-                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Services</a></li>
-                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Case Studies</a></li>
-                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Blog</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="mb-4">Contact Us</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Design Street, Creative City</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +1 (234) 567-8900</li>
-                        <li><i class="fas fa-envelope me-2"></i> info@bootstrap.com</li>
-                    </ul>
-                </div>
+        
+        <div class="login-form">
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="example@gmail.com">
             </div>
-            <hr class="mt-5 mb-4" style="border-color: rgba(255,255,255,0.1);">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-0">&copy; 2023 Bootstrap. All rights reserved.</p>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="**********">
+            </div>
+            
+            <div class="form-options">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember">
+                    <label class="form-check-label" for="remember">Remember me</label>
                 </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Designed with <i class="fas fa-heart text-danger"></i> for the web</p>
-                </div>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+            
+            <button class="login-btn">Login</button>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="#">Sign up</a>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
