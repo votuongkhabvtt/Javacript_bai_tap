@@ -1,34 +1,285 @@
-import tkinter as tk
-from tkinter import messagebox
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .login-card {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-left {
+            background: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+            min-height: 500px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(37, 117, 252, 0.7);
+        }
+        
+        .login-left-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .login-right {
+            background-color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .form-control:focus {
+            border-color: #2575fc;
+            box-shadow: none;
+        }
+        
+        .btn-login {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .facebook {
+            background-color: #3b5998;
+        }
+        
+        .twitter {
+            background-color: #1DA1F2;
+        }
+        
+        .google {
+            background-color: #DB4437;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #6c757d;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .divider::before {
+            margin-right: .25em;
+        }
+        
+        .divider::after {
+            margin-left: .25em;
+        }
+        
+        .forgot-link {
+            color: #2575fc;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .forgot-link:hover {
+            color: #6a11cb;
+            text-decoration: underline;
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 991px) {
+            .login-left {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container login-container">
+        <div class="card login-card">
+            <div class="row g-0">
+                <div class="col-lg-6 d-none d-lg-flex">
+                    <div class="login-left">
+                        <div class="login-left-content">
+                            <h2 class="mb-4">Chào mừng trở lại!</h2>
+                            <p class="lead">Đăng nhập để truy cập vào hệ thống và quản lý tài khoản của bạn một cách dễ dàng và thuận tiện.</p>
+                            <div class="mt-5">
+                                <h4>Chưa có tài khoản?</h4>
+                                <a href="#" class="btn btn-outline-light mt-3">Đăng ký ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="login-right">
+                        <div class="text-center mb-5">
+                            <img src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Bootstrap Logo" width="72" height="57">
+                            <h2 class="mt-3">Đăng nhập hệ thống</h2>
+                            <p class="text-muted">Vui lòng nhập thông tin đăng nhập của bạn</p>
+                        </div>
+                        
+                        <form>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mật khẩu</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" required>
+                                    <span class="input-group-text"><i class="fas fa-eye-slash"></i></span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember">
+                                <label class="form-check-label" for="remember">Ghi nhớ đăng nhập</label>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-login w-100 mb-3">Đăng nhập</button>
+                            
+                            <div class="text-center mb-3">
+                                <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                            </div>
+                            
+                            <div class="divider">Hoặc đăng nhập bằng</div>
+                            
+                            <div class="social-login">
+                                <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-btn twitter"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+                            </div>
+                        </form>
+                        
+                        <div class="register-link">
+                            <p class="text-muted">Chưa có tài khoản? <a href="#" class="forgot-link">Tạo tài khoản mới</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-def login():
-    username = entry_username.get()
-    password = entry_password.get()
-    
-    if username == "admin" and password == "password":
-        messagebox.showinfo("Login Success", "Welcome!")
-    else:
-        messagebox.showerror("Login Failed", "Invalid credentials")
-
-# Create the main window
-root = tk.Tk()
-root.title("Login Interface")
-
-# Create and place the username label and entry
-label_username = tk.Label(root, text="Username:")
-label_username.pack(pady=5)
-entry_username = tk.Entry(root)
-entry_username.pack(pady=5)
-
-# Create and place the password label and entry
-label_password = tk.Label(root, text="Password:")
-label_password.pack(pady=5)
-entry_password = tk.Entry(root, show="*")
-entry_password.pack(pady=5)
-
-# Create and place the login button
-button_login = tk.Button(root, text="Login", command=login)
-button_login.pack(pady=20)
-
-# Run the application
-root.mainloop()
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Toggle password visibility
+        document.querySelector('.fa-eye-slash').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+        
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation
+            if (email && password) {
+                // Show success message
+                alert('Đăng nhập thành công!');
+                
+                // Reset form
+                this.reset();
+            } else {
+                alert('Vui lòng điền đầy đủ thông tin!');
+            }
+        });
+    </script>
+</body>
+</html>
